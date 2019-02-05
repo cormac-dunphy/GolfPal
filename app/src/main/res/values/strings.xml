@@ -23,4 +23,5 @@
     <string name="courseDetailsLbl">Full Course Details</string>
     <string name="informationLbl">Information</string>
     <string name="emptyMessageLbl">You have no courses added, go for a round!</string>
+    <string name="favTitle">Favourite Courses</string>
 </resources>

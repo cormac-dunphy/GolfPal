@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="10dp">
+
+
+    <Button
+        android:id="@+id/clFavouriteBtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorFontOffWhite"
+        android:drawableStart="@drawable/fav_icon" />
+
+    <TextView
+        android:id="@+id/clCourseName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:text="@string/courseNameLbl"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/clCourseLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:text="@string/courseLocationLbl" />
+
+    <TextView
+        android:id="@+id/clCoursePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:text="@string/coursePriceLbl" />
+
+    <Button
+        android:id="@+id/clDeleteBtn"
+        android:drawableEnd="@drawable/del_icon"
+        android:background="@color/colorFontOffWhite"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
