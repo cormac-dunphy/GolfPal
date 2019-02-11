@@ -2,8 +2,8 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp">
-
+    android:layout_marginTop="10dp"
+    android:descendantFocusability="blocksDescendants"  >
 
     <Button
         android:id="@+id/clFavouriteBtn"
@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:background="@color/colorFontOffWhite"
+        android:background="@null"
         android:drawableStart="@drawable/fav_icon" />
 
     <TextView
@@ -47,7 +47,7 @@
     <Button
         android:id="@+id/clDeleteBtn"
         android:drawableEnd="@drawable/del_icon"
-        android:background="@color/colorFontOffWhite"
+        android:background="@null"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"

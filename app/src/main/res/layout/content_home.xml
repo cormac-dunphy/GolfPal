@@ -42,6 +42,7 @@
         android:layout_height="119dp"
         android:background="@color/colorFontWhite"
         android:drawableTop="@drawable/golf_bag"
+        android:onClick="toFavourites"
         android:text="@string/favouritesCourseLbl"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

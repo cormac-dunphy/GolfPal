@@ -1,14 +1,14 @@
 package cormac.golfpal.activities;
 
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;

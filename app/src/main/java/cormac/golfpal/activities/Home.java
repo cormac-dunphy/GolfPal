@@ -1,15 +1,21 @@
 package cormac.golfpal.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
@@ -33,6 +39,23 @@ public class Home extends Base {
         CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
         courseListView.setAdapter(courseListViewAdapter);
 
+        courseListView.setLongClickable(true);
+
+        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("longclick", "item clicked");
+                Log.i("longclick", "int i: " + i);
+                Log.i("longclick", "course at i: " + courseList.get(i));
+                beforeUpdateName = courseList.get(i).name;
+                beforeUpdatePosition = i;
+                Intent toUpdate = new Intent(Home.this, Update.class);
+                startActivity(toUpdate);
+
+                return true;
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +71,13 @@ public class Home extends Base {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
+    }
+
+    public void onResume() {
+        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
+        courseListViewAdapter.notifyDataSetChanged();
+
+        super.onResume();
     }
 
     @Override
@@ -69,4 +99,10 @@ public class Home extends Base {
     {
         startActivity(new Intent(this,AddCourse.class));
     }
+
+    public void toFavourites(View v)
+    {
+        startActivity(new Intent(this, Favourite.class));
+    }
+
 }

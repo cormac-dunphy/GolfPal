@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,11 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             public void onClick(View view) {
                 Course course = getItem(position);
                 courseList.remove(position);
+                if (favouriteList.contains(course)){
+                    Log.i("favlist", "course is in favourite list");
+                    favouriteList.remove(course);
+                    Log.i("favlist", "course removed from favourites");
+                }
                 notifyDataSetChanged();
                 Toast toast = Toast.makeText(getContext(), "Deleted " + course.name, Toast.LENGTH_LONG);
                 toast.show();

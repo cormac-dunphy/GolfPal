@@ -24,4 +24,9 @@
     <string name="informationLbl">Information</string>
     <string name="emptyMessageLbl">You have no courses added, go for a round!</string>
     <string name="favTitle">Favourite Courses</string>
+    <string name="removefavourite">Remove</string>
+    <string name="updateName">Update Name</string>
+    <string name="updateTitle">Update Course</string>
+    <string name="updateLocation">Update Location</string>
+    <string name="updatePrice">Update Price</string>
 </resources>
