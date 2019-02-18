@@ -22,6 +22,7 @@ public class Base extends AppCompatActivity {
     public static ArrayList<Course> favouriteList = new ArrayList<>();
     public static String beforeUpdateName;
     public int beforeUpdatePosition;
+    ArrayList<Course> dbCourseList = new ArrayList<>();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
