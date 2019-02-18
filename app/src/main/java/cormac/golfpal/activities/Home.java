@@ -21,13 +21,17 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.CourseListViewAdapter;
+import cormac.golfpal.utils.DatabaseHelper;
 
 public class Home extends Base {
     TextView emptyList;
     ListView courseListView;
+    DatabaseHelper myDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +40,16 @@ public class Home extends Base {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dbCourseList = new ArrayList<>();
+        myDb = new DatabaseHelper(this);
+
         emptyList = findViewById(R.id.emptyList);
         courseListView = findViewById(R.id.recentlyAddedList);
         courseListView.setEmptyView(emptyList);
 
-        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
-        courseListView.setAdapter(courseListViewAdapter);
+        //CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
+        //courseListView.setAdapter(courseListViewAdapter);
+        loadDataCourseList();
 
         courseListView.setLongClickable(true);
 
@@ -68,6 +76,14 @@ public class Home extends Base {
                         .setAction("More Info", null).show();
             }
         });
+    }
+
+    private void loadDataCourseList() {
+        dbCourseList = myDb.getAllCourseData();
+        Log.i("database", "loadDataCourseList: dbCourseList - " + String.valueOf(dbCourseList));
+        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, dbCourseList);
+        courseListView.setAdapter(courseListViewAdapter);
+        courseListViewAdapter.notifyDataSetChanged();
     }
 
     @Override
