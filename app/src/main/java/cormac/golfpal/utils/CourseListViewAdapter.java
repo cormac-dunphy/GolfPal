@@ -22,14 +22,15 @@ import cormac.golfpal.models.Course;
 
 import static android.content.ContentValues.TAG;
 import static cormac.golfpal.activities.Base.courseList;
+import static cormac.golfpal.activities.Base.dbCourseList;
 import static cormac.golfpal.activities.Base.favouriteList;
 
 public class CourseListViewAdapter extends ArrayAdapter<Course> {
     private LayoutInflater theInflater = null;
+    DatabaseHelper myDb = new DatabaseHelper(getContext());
 
     public CourseListViewAdapter(Context context, ArrayList<Course> courseList) {
         super(context, R.layout.course_list_layout, courseList);
-
         theInflater = LayoutInflater.from(getContext());
     }
 
@@ -53,7 +54,9 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
                         favouriteList.remove(course);
                     }
                 }
-                courseList.remove(course);
+                //courseList.remove(course);
+                myDb.deleteCourseRow(course);
+                dbCourseList.remove(course);
                 notifyDataSetChanged();
                 Toast toast = Toast.makeText(getContext(), "Deleted " + course.name, Toast.LENGTH_LONG);
                 toast.show();
