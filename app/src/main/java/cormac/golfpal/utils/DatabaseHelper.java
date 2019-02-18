@@ -74,4 +74,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return courseArrayList;
 
     }
+
+    public void deleteCourseRow(Course course) {
+        Log.i("database", "deleteCourseRow: in delete course row");
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + COURSES+ " WHERE "+COURSE_NAME+"='"+course.name+"'");
+        db.close();
+    }
 }
