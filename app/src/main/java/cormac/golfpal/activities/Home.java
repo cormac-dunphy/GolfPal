@@ -17,6 +17,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.CourseListViewAdapter;

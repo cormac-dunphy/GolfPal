@@ -46,12 +46,14 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
-                courseList.remove(position);
-                if (favouriteList.contains(course)){
-                    Log.i("favlist", "course is in favourite list");
-                    favouriteList.remove(course);
-                    Log.i("favlist", "course removed from favourites");
+                Log.i("favlist", "favlist: " + String.valueOf(favouriteList));
+                for (Course c : favouriteList){
+                    Log.i("favlist", "c.name: " + c.name);
+                    if(c.name == course.name){
+                        favouriteList.remove(course);
+                    }
                 }
+                courseList.remove(course);
                 notifyDataSetChanged();
                 Toast toast = Toast.makeText(getContext(), "Deleted " + course.name, Toast.LENGTH_LONG);
                 toast.show();

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "38842849059",
+    "firebase_url": "https://golfpal.firebaseio.com",
+    "project_id": "golfpal",
+    "storage_bucket": "golfpal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38842849059:android:ab9061f8d1af886f",
+        "android_client_info": {
+          "package_name": "cormac.golfpal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38842849059-7019gl100pekq6a8u4jlps3lgcekdr79.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cormac.golfpal",
+            "certificate_hash": "452b3cb4fb70539e3906c25b67ad98bd005c1544"
+          }
+        },
+        {
+          "client_id": "38842849059-ihlevlnb78dtsoelbueh10ptclbppm3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU6ekHSR0fHzLiTML_L_sgDmMICiXZZ8w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38842849059-ihlevlnb78dtsoelbueh10ptclbppm3e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
