@@ -1,6 +1,7 @@
 package cormac.golfpal.utils;
 
 import android.content.Context;
+import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Layout;
@@ -12,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,7 +92,9 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
         TextView courseLocation = courseListView.findViewById(R.id.clCourseLocation);
         courseLocation.setText(course.location);
         TextView coursePrice = courseListView.findViewById(R.id.clCoursePrice);
-        coursePrice.setText(String.valueOf(course.price));
+        coursePrice.setText("€" + String.valueOf(course.price) + "0");
+        RatingBar courseRating = courseListView.findViewById(R.id.clCourseRating);
+        courseRating.setRating((float) course.rating);
 
         return courseListView;
     }

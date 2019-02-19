@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import cormac.golfpal.utils.FavRecyclerAdapter;
 public class Favourite extends Base {
     RecyclerView favRecyclerView;
     DatabaseHelper myDb;
+    String courseToBeUnmarked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +39,4 @@ public class Favourite extends Base {
         favRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
 }
