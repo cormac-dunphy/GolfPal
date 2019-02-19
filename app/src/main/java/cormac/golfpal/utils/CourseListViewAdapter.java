@@ -69,6 +69,9 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             public void onClick(View view) {
                 Course course = getItem(position);
                 favouriteList.add(course);
+
+                myDb.markAsFavourite(course.name);
+
                 notifyDataSetChanged();
                 Toast toast = Toast.makeText(getContext(), "Added " + course.name + " to favourites", Toast.LENGTH_LONG);
                 toast.show();

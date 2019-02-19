@@ -50,19 +50,19 @@ public class AddCourse extends Base {
         String courseLocation = courseLocationET.getText().toString();
         Double coursePrice = Double.parseDouble(coursePriceET.getText().toString());
         float courseRating = courseRatingBar.getRating();
+        boolean courseFavourite = false;
 
-        Course course = new Course(courseName, courseLocation, coursePrice, courseRating);
+        Course course = new Course(courseName, courseLocation, coursePrice, courseRating, courseFavourite);
 
-        courseList.add(course);
+        //courseList.add(course);
 
-        Toast.makeText(this, "courseListSize: " + courseList.size(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "courseListSize: " + courseList.size(), Toast.LENGTH_SHORT).show();
 
         //add to database
-        myDb.insertCourseData(courseName, courseLocation, String.valueOf(coursePrice), String.valueOf(courseRating));
+        myDb.insertCourseData(courseName, courseLocation, String.valueOf(coursePrice), String.valueOf(courseRating), String.valueOf(courseFavourite));
 
-        ArrayList<Course> res = myDb.getAllCourseData();
-        Log.i("database", "res: " + String.valueOf(res));
-
+        //ArrayList<Course> res = myDb.getAllCourseData();
+        //Log.i("database", "res: " + String.valueOf(res));
         Intent toHome = new Intent(this, Home.class);
         startActivity(toHome);
     }

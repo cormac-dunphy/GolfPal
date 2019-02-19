@@ -13,9 +13,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 import cormac.golfpal.R;
+import cormac.golfpal.activities.Favourite;
 import cormac.golfpal.models.Course;
 
 import static android.content.ContentValues.TAG;
+import static cormac.golfpal.activities.Base.dbFavouritesList;
 import static cormac.golfpal.activities.Base.favouriteList;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
@@ -50,10 +52,20 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
     }
 
     private void deleteFavourite(int position) {
+        Log.i("deletefavourite", "course at position: " + String.valueOf(getCourse(position)));
+
+        Course course = getCourse(position);
+
+
+
         favouriteList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, favouriteList.size());
         notifyDataSetChanged();
+    }
+
+    private Course getCourse(int position){
+        return dbFavouritesList.get(position);
     }
 
     @Override
