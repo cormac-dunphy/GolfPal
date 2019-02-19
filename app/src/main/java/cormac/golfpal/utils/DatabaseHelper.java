@@ -108,7 +108,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void markAsFavourite(String courseName) {
         Log.i("favourite", "markAsFavourite: in mark as favourite");
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 1");
+        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 1 WHERE " + COURSE_NAME + "='"+courseName+"'");
+        db.close();
+    }
+
+    public void unmarkAsFavourite(String courseName) {
+        Log.i("favourite", "unmarkAsFavourite: courseName = " + courseName);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 0 WHERE " + COURSE_NAME + "='"+courseName+"'");
         db.close();
     }
 }

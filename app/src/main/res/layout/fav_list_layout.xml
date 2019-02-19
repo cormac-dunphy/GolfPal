@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/favCourseName"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_weight="1"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
         android:text="@string/courseNameLbl" />
 
     <TextView
         android:id="@+id/favCourseLocation"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/favCourseName"
         android:text="@string/courseLocationLbl" />
 
     <TextView
         android:id="@+id/favCoursePrice"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/favCourseLocation"
         android:text="@string/coursePriceLbl" />
 
     <Button
@@ -30,7 +32,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/del_icon"
-        android:layout_marginEnd="50dp"
+        android:layout_toRightOf="@id/favCoursePrice"
         android:background="@null"
-        android:layout_weight="1" />
-</LinearLayout>
+        android:layout_marginEnd="25dp" />
+
+    <RatingBar
+        android:id="@+id/clCourseRating"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/favCourseLocation"
+        android:layout_centerHorizontal="true" />
+
+    <View
+        android:id="@+id/favListSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/clCourseRating"/>
+</RelativeLayout>

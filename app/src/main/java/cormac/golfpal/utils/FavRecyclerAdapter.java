@@ -6,9 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -16,13 +15,12 @@ import cormac.golfpal.R;
 import cormac.golfpal.activities.Favourite;
 import cormac.golfpal.models.Course;
 
-import static android.content.ContentValues.TAG;
 import static cormac.golfpal.activities.Base.dbFavouritesList;
-import static cormac.golfpal.activities.Base.favouriteList;
 
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
 
     private final ArrayList<Course> favouriteList;
+    Favourite favourite = new Favourite();
 
     public FavRecyclerAdapter(ArrayList<Course> favouriteList) {
         this.favouriteList = favouriteList;
@@ -41,7 +39,8 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
         holder.favCourseName.setText(course.name);
         holder.favCourseLocation.setText(course.location);
-        holder.favCoursePrice.setText(String.valueOf(course.price));
+        holder.favCoursePrice.setText("€" + String.valueOf(course.price) + "0");
+        holder.favCourseRating.setRating((float) course.rating);
 
         holder.removeFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +54,8 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
         Log.i("deletefavourite", "course at position: " + String.valueOf(getCourse(position)));
 
         Course course = getCourse(position);
-
-
-
-        favouriteList.remove(position);
+        Log.i("removefavourite", "deleteFavourite: course.name = " + course.name);
+        dbFavouritesList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, favouriteList.size());
         notifyDataSetChanged();
@@ -77,6 +74,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
         public TextView favCourseName;
         public TextView favCourseLocation;
         public TextView favCoursePrice;
+        public RatingBar favCourseRating;
         public Button removeFavButton;
 
         public ViewHolder(View itemView) {
@@ -85,6 +83,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
             favCourseName = itemView.findViewById(R.id.favCourseName);
             favCourseLocation = itemView.findViewById(R.id.favCourseLocation);
             favCoursePrice = itemView.findViewById(R.id.favCoursePrice);
+            favCourseRating = itemView.findViewById(R.id.clCourseRating);
             removeFavButton = itemView.findViewById(R.id.favRemove);
         }
     }
