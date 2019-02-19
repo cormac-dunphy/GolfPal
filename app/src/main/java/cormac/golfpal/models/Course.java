@@ -12,16 +12,25 @@ public class Course implements Serializable {
     public String location;
     public double rating;
     public double price;
-
+    public boolean favourite;
 
     public Course() {}
 
-    public Course(String name, String location, double price, double rating)
+    public Course(String name, String location, double price, double rating, boolean favourite)
     {
         this.name = name;
         this.location = location;
         this.rating = rating;
         this.price = price;
+        this.favourite = favourite;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 
     public String getName() {

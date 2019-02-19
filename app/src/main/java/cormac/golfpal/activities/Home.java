@@ -94,8 +94,9 @@ public class Home extends Base {
     }
 
     public void onResume() {
-        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
+        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, dbCourseList);
         courseListViewAdapter.notifyDataSetChanged();
+        Log.i("courses", "courses: " + String.valueOf(dbCourseList));
 
         super.onResume();
     }

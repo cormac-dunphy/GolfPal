@@ -37,8 +37,9 @@ public class Update extends Base {
                 String updatedCourseLocation = updatedCourseLocationET.getText().toString();
                 double updatedCoursePrice = Double.parseDouble(updatedCoursePriceET.getText().toString());
                 float updatedCourseRating = updatedCourseRatingBar.getRating();
+                boolean updatedCourseFavourite = true;
 
-                Course updatedCourse = new Course(updatedCourseName, updatedCourseLocation, updatedCoursePrice, updatedCourseRating);
+                Course updatedCourse = new Course(updatedCourseName, updatedCourseLocation, updatedCoursePrice, updatedCourseRating, updatedCourseFavourite);
 
                 courseList.set(beforeUpdatePosition, updatedCourse);
 
