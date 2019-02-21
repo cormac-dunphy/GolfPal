@@ -17,7 +17,6 @@ import cormac.golfpal.utils.FavRecyclerAdapter;
 public class Favourite extends Base {
     RecyclerView favRecyclerView;
     DatabaseHelper myDb;
-    String courseToBeUnmarked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

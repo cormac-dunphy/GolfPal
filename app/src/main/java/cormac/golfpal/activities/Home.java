@@ -51,31 +51,22 @@ public class Home extends Base {
         //courseListView.setAdapter(courseListViewAdapter);
         loadDataCourseList();
 
-        courseListView.setLongClickable(true);
-
-        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.i("longclick", "item clicked");
-                Log.i("longclick", "int i: " + i);
-                Log.i("longclick", "course at i: " + courseList.get(i));
-                beforeUpdateName = courseList.get(i).name;
-                beforeUpdatePosition = i;
-                Intent toUpdate = new Intent(Home.this, Update.class);
-                startActivity(toUpdate);
-
-                return true;
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Information", Snackbar.LENGTH_LONG)
-                        .setAction("More Info", null).show();
-            }
-        });
+//        courseListView.setLongClickable(true);
+//
+//        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Log.i("longclick", "item clicked");
+//                Log.i("longclick", "int i: " + i);
+//                Log.i("longclick", "course at i: " + courseList.get(i));
+//                beforeUpdateName = courseList.get(i).name;
+//                beforeUpdatePosition = i;
+//                Intent toUpdate = new Intent(Home.this, Update.class);
+//                startActivity(toUpdate);
+//
+//                return true;
+//            }
+//        });
     }
 
     private void loadDataCourseList() {

@@ -20,8 +20,8 @@ public class Base extends AppCompatActivity {
 
     public static ArrayList<Course> courseList = new ArrayList<>();
     public static ArrayList<Course> favouriteList = new ArrayList<>();
-    public static String beforeUpdateName;
-    public int beforeUpdatePosition;
+//    public static String beforeUpdateName;
+//    public int beforeUpdatePosition;
     public static ArrayList<Course> dbCourseList = new ArrayList<>();
     public static ArrayList<Course> dbFavouritesList = new ArrayList<>();
 
@@ -53,6 +53,23 @@ public class Base extends AppCompatActivity {
 
     public void menuHelp(MenuItem m)
     {
-
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.appHelp))
+                .setMessage(getString(R.string.appHelp1)
+                        + "\n\n"
+                        + getString(R.string.appHelp2)
+                        +"\n\n"
+                        + getString(R.string.appHelp3)
+                        +"\n\n"
+                        + getString(R.string.appHelp4)
+                        +"\n\n"
+                        + getString(R.string.apphelp5))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // we could put some code here too
+                    }
+                })
+                .show();
     }
 }

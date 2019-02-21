@@ -3,6 +3,7 @@ package cormac.golfpal.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
@@ -101,21 +102,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteCourseRow(Course course) {
         Log.i("database", "deleteCourseRow: in delete course row");
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + COURSES+ " WHERE "+COURSE_NAME+"='"+course.name+"'");
-        db.close();
+        String cleanCourseName = null;
+        if (course.name.contains("'")) {
+            cleanCourseName = course.name.replaceAll("'", "''");
+            db.execSQL("DELETE FROM " + COURSES + " WHERE " + COURSE_NAME + " LIKE '%" + cleanCourseName + "%'");
+            db.close();
+        } else {
+            db.execSQL("DELETE FROM " + COURSES + " WHERE " + COURSE_NAME + " = '" + course.name + "'");
+            db.close();
+        }
     }
 
     public void markAsFavourite(String courseName) {
         Log.i("favourite", "markAsFavourite: in mark as favourite");
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 1 WHERE " + COURSE_NAME + "='"+courseName+"'");
-        db.close();
+        String cleanCourseName = null;
+        if (courseName.contains("'")) {
+            cleanCourseName = courseName.replaceAll("'", "''");
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 1 WHERE " + COURSE_NAME + " LIKE '%" + cleanCourseName + "%'");
+            db.close();
+        } else {
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 1 WHERE " + COURSE_NAME + " = '" + courseName + "'");
+            db.close();
+        }
     }
 
     public void unmarkAsFavourite(String courseName) {
         Log.i("favourite", "unmarkAsFavourite: courseName = " + courseName);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 0 WHERE " + COURSE_NAME + "='"+courseName+"'");
-        db.close();
+        String cleanCourseName = null;
+        if (courseName.contains("'")) {
+            cleanCourseName = courseName.replaceAll("'", "''");
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 0 WHERE " + COURSE_NAME + " LIKE '%" + cleanCourseName + "%'");
+            db.close();
+        } else {
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_FAVOURITE + " = 0 WHERE " + COURSE_NAME + " = '" + courseName + "'");
+            db.close();
+        }
     }
 }

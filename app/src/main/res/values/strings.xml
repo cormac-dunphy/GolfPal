@@ -2,7 +2,6 @@
     <string name="app_name">GolfPal</string>
     <string name="action_settings">Settings</string>
     <string name="appHelp">This is the help screen for GolfPal</string>
-    <string name="appHelpExtra">More help please</string>
     <string name="appDisplayName">GolfPal</string>
     <string name="appDesc">GolfPal provides the user with a quick and easy way to manage a list of courses and your favourite courses.</string>
     <string name="appMoreInfo">For more information about GolfPal or to provide feedback please visit our website.</string>
@@ -29,4 +28,9 @@
     <string name="updateTitle">Update Course</string>
     <string name="updateLocation">Update Location</string>
     <string name="updatePrice">Update Price</string>
+    <string name="appHelp1">1. To add course to your list go to \'Course Check In\' and enter the course details.</string>
+    <string name="appHelp2">2. To favourite a course press the icon to the left of course on the home page list.</string>
+    <string name="appHelp3">3. To view your favourite courses click the favourite courses button.</string>
+    <string name="appHelp4">4. To delete a course click the red icon to the right side of the course on the home page list.</string>
+    <string name="apphelp5">5. To remove course from favourites press the red icon to the right of the course on the favourites list.</string>
 </resources>

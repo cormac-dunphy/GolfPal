@@ -34,12 +34,14 @@
         android:drawableRight="@drawable/del_icon"
         android:layout_toRightOf="@id/favCoursePrice"
         android:background="@null"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="25dp" />
 
     <RatingBar
         android:id="@+id/clCourseRating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/favCourseLocation"
