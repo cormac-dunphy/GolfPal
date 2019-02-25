@@ -51,7 +51,7 @@
         android:text="@string/coursePriceLbl" />
 
     <RatingBar
-        android:id="@+id/clCourseRating"
+        android:id="@+id/favCourseRating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

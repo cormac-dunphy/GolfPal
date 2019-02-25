@@ -8,17 +8,29 @@
     tools:context="cormac.golfpal.activities.Favourite"
     tools:showIn="@layout/activity_favourite">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/favRecyclerView"
+    <TextView
+        android:id="@+id/favEmptyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="500dp"
+        android:layout_marginBottom="1000dp"
+        android:text="@string/favEmptyList"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/favListView"
+        app:layout_constraintTop_toBottomOf="@+id/favListView" />
+
+    <ListView
+        android:id="@+id/favListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/footer">
-
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/footer"

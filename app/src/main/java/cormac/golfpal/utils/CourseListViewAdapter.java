@@ -1,18 +1,14 @@
 package cormac.golfpal.utils;
 
 import android.content.Context;
-import android.media.Rating;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,8 +20,6 @@ import java.util.Locale;
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 
-import static android.content.ContentValues.TAG;
-import static cormac.golfpal.activities.Base.courseList;
 import static cormac.golfpal.activities.Base.dbCourseList;
 import static cormac.golfpal.activities.Base.favouriteList;
 
@@ -72,13 +66,13 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
+                course.favourite = true;
+                Log.i("favCourse", "course = " + String.valueOf(course) + String.valueOf(course.favourite));
                 favouriteList.add(course);
-
                 myDb.markAsFavourite(course.name);
 
                 notifyDataSetChanged();
-                Toast toast = Toast.makeText(getContext(), "Added " + course.name + " to favourites", Toast.LENGTH_LONG);
-                toast.show();
+                Toast.makeText(getContext(), "Added " + course.name + " to favourites", Toast.LENGTH_LONG).show();
                 Log.i("favlist", "favlist length: " + favouriteList.size());
             }
         });
@@ -101,7 +95,7 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
         Log.i("courselist", "BindView: priceString = " + priceString);
 
         coursePrice.setText(priceString);
-        RatingBar courseRating = courseListView.findViewById(R.id.clCourseRating);
+        RatingBar courseRating = courseListView.findViewById(R.id.favCourseRating);
         courseRating.setRating((float) course.rating);
 
         return courseListView;

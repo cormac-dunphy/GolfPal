@@ -20,8 +20,6 @@ public class Base extends AppCompatActivity {
 
     public static ArrayList<Course> courseList = new ArrayList<>();
     public static ArrayList<Course> favouriteList = new ArrayList<>();
-//    public static String beforeUpdateName;
-//    public int beforeUpdatePosition;
     public static ArrayList<Course> dbCourseList = new ArrayList<>();
     public static ArrayList<Course> dbFavouritesList = new ArrayList<>();
 

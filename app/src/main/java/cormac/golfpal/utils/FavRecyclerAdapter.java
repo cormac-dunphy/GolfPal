@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import cormac.golfpal.R;
-import cormac.golfpal.activities.Favourite;
+import cormac.golfpal.activities.Base;
 import cormac.golfpal.models.Course;
 
 import static cormac.golfpal.activities.Base.dbFavouritesList;
@@ -20,7 +22,8 @@ import static cormac.golfpal.activities.Base.dbFavouritesList;
 public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.ViewHolder> {
 
     private final ArrayList<Course> favouriteList;
-    Favourite favourite = new Favourite();
+    //Favourite favourite = new Favourite();
+    //Base base = new Base();
 
     public FavRecyclerAdapter(ArrayList<Course> favouriteList) {
         this.favouriteList = favouriteList;
@@ -39,7 +42,12 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
 
         holder.favCourseName.setText(course.name);
         holder.favCourseLocation.setText(course.location);
-        holder.favCoursePrice.setText("€" + String.valueOf(course.price) + "0");
+
+        Locale locale = Locale.FRANCE;
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+        String priceString = formatter.format(course.price);
+        Log.i("courselist", "onBindViewHolder: priceString = " + priceString);
+        holder.favCoursePrice.setText(priceString);
         holder.favCourseRating.setRating((float) course.rating);
 
         holder.removeFavButton.setOnClickListener(new View.OnClickListener() {
@@ -51,14 +59,20 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
     }
 
     private void deleteFavourite(int position) {
-        Log.i("deletefavourite", "course at position: " + String.valueOf(getCourse(position)));
-
         Course course = getCourse(position);
-        Log.i("removefavourite", "deleteFavourite: course.name = " + course.name);
-        dbFavouritesList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, favouriteList.size());
-        notifyDataSetChanged();
+        course.favourite = false;
+        Log.i("removefavourite", "favouriteList = " + Base.favouriteList.size());
+        for(Course c : Base.favouriteList){
+            //Log.i("removeFavourite", "c.favourite = " + c.favourite);
+            if(c.getName() != null && c.getName().contains(course.name)){
+                int index = Base.favouriteList.indexOf(c);
+                Base.favouriteList.set(index, course);
+            }
+        }
+//        favouriteList.remove(course);
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, favouriteList.size());
+//        notifyDataSetChanged();
     }
 
     private Course getCourse(int position){
@@ -83,7 +97,7 @@ public class FavRecyclerAdapter extends RecyclerView.Adapter<FavRecyclerAdapter.
             favCourseName = itemView.findViewById(R.id.favCourseName);
             favCourseLocation = itemView.findViewById(R.id.favCourseLocation);
             favCoursePrice = itemView.findViewById(R.id.favCoursePrice);
-            favCourseRating = itemView.findViewById(R.id.clCourseRating);
+            favCourseRating = itemView.findViewById(R.id.favCourseRating);
             removeFavButton = itemView.findViewById(R.id.favRemove);
         }
     }
