@@ -38,7 +38,7 @@
         android:layout_marginEnd="25dp" />
 
     <RatingBar
-        android:id="@+id/clCourseRating"
+        android:id="@+id/favCourseRating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
@@ -52,5 +52,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-        android:layout_below="@id/clCourseRating"/>
+        android:layout_below="@id/favCourseRating"/>
 </RelativeLayout>
