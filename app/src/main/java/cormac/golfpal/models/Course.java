@@ -1,12 +1,11 @@
 package cormac.golfpal.models;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * Created by Cormac on 22/01/2019.
  */
-
+//Course object
 public class Course implements Serializable {
     public String name;
     public String location;
