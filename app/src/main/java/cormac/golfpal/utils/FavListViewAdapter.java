@@ -11,20 +11,16 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-
 import cormac.golfpal.R;
-import cormac.golfpal.activities.Base;
 import cormac.golfpal.models.Course;
 import static cormac.golfpal.activities.Base.dbFavouritesList;
 
 public class FavListViewAdapter extends ArrayAdapter<Course> {
     private LayoutInflater theInflater = null;
     DatabaseHelper myDb = new DatabaseHelper(getContext());
-    Base base = new Base();
 
     public FavListViewAdapter(@NonNull Context context, ArrayList<Course> favouritelist) {
         super(context, R.layout.fav_list_layout, favouritelist);
@@ -38,23 +34,26 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
             convertView = theInflater.inflate(R.layout.fav_list_layout, parent, false);
         }
         convertView = BindView(position, convertView);
-
+        //click listener for remove favourite button on favourite page
         Button removeFavourite = convertView.findViewById(R.id.favRemove);
         removeFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
+                //passes course name to db helper to remove favourite
                 myDb.unmarkAsFavourite(course.name);
+                //removes course from dbCourselist
                 dbFavouritesList.remove(course);
+                //refreshes the list
                 notifyDataSetChanged();
+                //pops up a toast to tell the user shich course was removed from favourites
                 Toast toast = Toast.makeText(getContext(), "Removed " + course.name + " from favourites", Toast.LENGTH_LONG);
                 toast.show();
             }
         });
-
         return convertView;
     }
-
+    //binds data to the favourite view
     private View BindView(int position, View favListView){
         Course course = getItem(position);
 

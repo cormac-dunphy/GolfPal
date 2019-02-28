@@ -6,9 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import java.util.ArrayList;
-
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 
@@ -18,8 +16,6 @@ import cormac.golfpal.models.Course;
 
 public class Base extends AppCompatActivity {
 
-    public static ArrayList<Course> courseList = new ArrayList<>();
-    public static ArrayList<Course> favouriteList = new ArrayList<>();
     public static ArrayList<Course> dbCourseList = new ArrayList<>();
     public static ArrayList<Course> dbFavouritesList = new ArrayList<>();
 
@@ -28,11 +24,11 @@ public class Base extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
-
+    //when home button pressed go to home page
     public void menuHome(MenuItem m) {
         startActivity(new Intent(this, Home.class));
     }
-
+    //information about the app in the menu
     public void menuInfo(MenuItem m)
     {
         new AlertDialog.Builder(this)
@@ -48,7 +44,7 @@ public class Base extends AppCompatActivity {
                 })
                 .show();
     }
-
+    //help for the app in the menu
     public void menuHelp(MenuItem m)
     {
         new AlertDialog.Builder(this)
