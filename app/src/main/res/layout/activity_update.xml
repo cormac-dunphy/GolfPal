@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.Update">
+
+    <TextView
+        android:id="@+id/updateFooter"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/colorPrimary"
+        android:paddingTop="5dp"
+        android:text="@string/appWebsite"
+        android:textAlignment="center"
+        android:textColor="@color/colorFontWhite"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"/>
+
+    <EditText
+        android:id="@+id/updateName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="98dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:hint="@string/updateName"
+        android:inputType="textCapSentences" />
+
+    <EditText
+        android:id="@+id/updateLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateName"
+        android:layout_marginStart="98dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:hint="@string/updateLocation"
+        android:inputType="textCapSentences" />
+
+    <EditText
+        android:id="@+id/updatePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateLocation"
+        android:layout_marginStart="97dp"
+        android:layout_marginEnd="101dp"
+        android:layout_marginBottom="44dp"
+        android:ems="10"
+        android:hint="@string/updatePrice"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="162dp"
+        android:background="@color/colorFontWhite"
+        android:drawableTop="@drawable/add_black_48"
+        android:text="@string/updateTitle" />
+
+    <RatingBar
+        android:id="@+id/updateRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="100dp" />
+
+</RelativeLayout>

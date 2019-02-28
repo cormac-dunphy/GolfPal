@@ -95,7 +95,7 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
         Log.i("courselist", "BindView: priceString = " + priceString);
 
         coursePrice.setText(priceString);
-        RatingBar courseRating = courseListView.findViewById(R.id.favCourseRating);
+        RatingBar courseRating = courseListView.findViewById(R.id.clCourseRating);
         courseRating.setRating((float) course.rating);
 
         return courseListView;

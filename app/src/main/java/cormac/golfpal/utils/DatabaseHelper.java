@@ -140,4 +140,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+
+    public void updateCourse(String courseName, Course course){
+        Log.i("updateCourse", "updateCourse: " + courseName);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + COURSES + " SET " + COURSE_NAME + " = '" + course.name + "', " + COURSE_LOCATION + " = '" + course.location + "' , " + COURSE_PRICE + " = '" + course.price + "', " + COURSE_RATING + " = '" + course.rating + "', " + COURSE_FAVOURITE + " = '" + course.favourite + "' WHERE " + COURSE_NAME + " = '" + courseName + "'");
+        Log.i("updateCourse", "updateCourse: " + course.name);
+        db.close();
+    }
 }

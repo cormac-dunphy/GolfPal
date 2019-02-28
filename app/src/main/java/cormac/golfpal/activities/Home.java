@@ -2,6 +2,7 @@ package cormac.golfpal.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.CourseListViewAdapter;
 import cormac.golfpal.utils.DatabaseHelper;
+
+import static android.widget.Toast.*;
 
 public class Home extends Base {
     TextView emptyList;
@@ -46,11 +50,23 @@ public class Home extends Base {
         emptyList = findViewById(R.id.emptyList);
         courseListView = findViewById(R.id.recentlyAddedList);
         courseListView.setEmptyView(emptyList);
+        courseListView.setLongClickable(true);
 
-        //CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, courseList);
-        //courseListView.setAdapter(courseListViewAdapter);
         loadDataCourseList();
 
+        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Course course = (Course) courseListView.getItemAtPosition(i);
+
+                Intent toUpdate = new Intent(Home.this, Update.class);
+                toUpdate.putExtra("name", course.name);
+                toUpdate.putExtra("favourite", course.favourite);
+                startActivity(toUpdate);
+
+                return true;
+            }
+        });
 //        courseListView.setLongClickable(true);
 //
 //        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -68,6 +84,7 @@ public class Home extends Base {
 //            }
 //        });
     }
+
 
     private void loadDataCourseList() {
         dbCourseList = myDb.getAllCourseData();

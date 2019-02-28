@@ -13,6 +13,7 @@
     <string name="favouritesCourseLbl">Favourite Courses</string>
     <string name="addACourseLbl">Course Check In</string>
     <string name="addCourseBtnLbl">Add Course</string>
+    <string name="updateCourseBtnLbl">Update Course</string>
     <string name="saveCourseBtn">Save Course</string>
     <string name="recentlyViewedLbl">Recently Added Courses</string>
     <string name="courseNameLbl">Name :</string>
