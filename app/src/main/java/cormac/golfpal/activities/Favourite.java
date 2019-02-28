@@ -16,7 +16,6 @@ import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.DatabaseHelper;
 import cormac.golfpal.utils.FavListViewAdapter;
-import cormac.golfpal.utils.FavRecyclerAdapter;
 
 public class Favourite extends Base {
     DatabaseHelper myDb;
