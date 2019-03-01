@@ -1,0 +1,14 @@
+GolfPal android application.
+
+This app is the first assignment in my "Mobile App Development 2" module.
+
+The purpose of this app is to keep track of golf courses that you have played on and also store information on them.
+The user can insert a course name, course location, course price, course rating and can also favourite the course.
+All data of the courses is stored in a SQLite database.
+
+I used android studio and java to create the app with standard code style.
+
+Throughout the development of the project I have been commiting my progress to github using branches.
+The code is available to clone or download at "https://github.com/cormac-dunphy/GolfPal".
+When you have the code cloned/downloaded you can run it from android studio.
+The app was designed on a Samsung Galaxy S6 edge+ so use on another device may affect the performance and general aesthetic of the app.
