@@ -12,3 +12,5 @@ Throughout the development of the project I have been commiting my progress to g
 The code is available to clone or download at "https://github.com/cormac-dunphy/GolfPal".
 When you have the code cloned/downloaded you can run it from android studio.
 The app was designed on a Samsung Galaxy S6 edge+ so use on another device may affect the performance and general aesthetic of the app.
+
+The apk file for the application is located in the app/release folder.
