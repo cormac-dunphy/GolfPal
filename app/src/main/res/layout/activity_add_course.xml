@@ -1,113 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cormac.golfpal.activities.AddCourse">
 
-
-    <TextView
-        android:id="@+id/addFooter"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:background="@color/colorPrimary"
-        android:paddingTop="5dp"
-        android:text="@string/appWebsite"
-        android:textAlignment="center"
-        android:textColor="@color/colorFontWhite"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/addPriceTV"
-        android:layout_width="99dp"
-        android:layout_height="43dp"
-        android:paddingTop="10dp"
-        android:text="@string/coursePriceLbl"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorFontBlack"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/addFooter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
-
-    <TextView
-        android:id="@+id/addLocationTV"
-        android:layout_width="99dp"
-        android:layout_height="43dp"
-        android:paddingTop="10dp"
-        android:text="@string/courseLocationLbl"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorFontBlack"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/addFooter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179" />
-
-    <TextView
-        android:id="@+id/addNameTV"
-        android:layout_width="99dp"
-        android:layout_height="43dp"
-        android:paddingTop="10dp"
-        android:text="@string/courseNameLbl"
-        android:textAlignment="textEnd"
-        android:textColor="@color/colorFontBlack"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/addFooter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.036" />
+    <ImageView
+        android:id="@+id/addImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentTop="true"
+        android:contentDescription="swingimage"
+        android:src="@drawable/swing" />
 
     <EditText
         android:id="@+id/addNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Enter Course Name"
-        android:inputType="textCapSentences"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
-        app:layout_constraintStart_toEndOf="@+id/addNameTV"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.017" />
-
-    <EditText
-        android:id="@+id/addPriceET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Enter Price"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
-        app:layout_constraintStart_toEndOf="@+id/addPriceTV"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.296" />
+        android:hint="@string/courseName"
+        android:inputType="textCapSentences" />
 
     <EditText
         android:id="@+id/addLocationET"
@@ -115,14 +36,25 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Enter Location"
-        android:inputType="textCapSentences"
-        app:layout_constraintBottom_toTopOf="@+id/addPriceET"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.37"
-        app:layout_constraintStart_toEndOf="@+id/addLocationTV"
-        app:layout_constraintTop_toBottomOf="@+id/addNameET"
-        app:layout_constraintVertical_bias="0.484" />
+        android:layout_marginTop="@dimen/fab_margin"
+        android:hint="@string/courseLocation"
+        android:layout_below="@id/addNameET"
+        android:layout_centerHorizontal="true"
+        android:inputType="textCapSentences" />
+
+    <EditText
+        android:id="@+id/addPriceET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/coursePrice"
+        android:layout_below="@id/addLocationET"
+        android:layout_centerHorizontal="true"
+        android:inputType="numberDecimal" />
 
     <RatingBar
         android:id="@+id/addRatingBar"
@@ -130,23 +62,18 @@
         android:layout_height="52dp"
         android:rating="1"
         android:stepSize="0.5"
-        app:layout_constraintBottom_toTopOf="@+id/addFooter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPriceET"
-        app:layout_constraintVertical_bias="0.213" />
+        android:layout_below="@id/addPriceET"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_centerHorizontal="true"/>
 
     <Button
-        android:id="@+id/addCourseBtn"
-        android:layout_width="79dp"
-        android:layout_height="84dp"
-        android:background="@color/colorFontWhite"
-        android:drawableTop="@drawable/add_black_48"
-        android:text="@string/addCourseBtnLbl"
-        app:layout_constraintBottom_toTopOf="@+id/addFooter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addRatingBar"
-        app:layout_constraintVertical_bias="0.714" />
+        android:id="@+id/addCourseDoneButton"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorLightGreen"
+        android:gravity="center"
+        android:text="@string/done"
+        android:textColor="@color/colorFontWhite" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

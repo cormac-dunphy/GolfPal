@@ -16,8 +16,31 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/homeCoursesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/courses"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorFontWhite"/>
+
+            <Button
+                android:id="@+id/homeFavouriteCoursesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:onClick="toFavourites"
+                android:text="@string/favourites"
+                android:textColor="@color/colorFontWhite" />
+
+        </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_home" />

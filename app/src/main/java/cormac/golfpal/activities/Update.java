@@ -34,7 +34,7 @@ public class Update extends AppCompatActivity {
 
     private void onUpdateCourseButtonPressed() {
         //click listener for update button
-        Button updateCourseButton = findViewById(R.id.updateButton);
+        Button updateCourseButton = findViewById(R.id.updateCourseDoneButton);
         updateCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,9 +45,9 @@ public class Update extends AppCompatActivity {
 
     private void updateCourse() {
         //get course data inputted by user
-        EditText updateCourseNameET = findViewById(R.id.updateName);
-        EditText updateCourseLocationET = findViewById(R.id.updateLocation);
-        EditText updateCoursePriceET = findViewById(R.id.updatePrice);
+        EditText updateCourseNameET = findViewById(R.id.updateNameET);
+        EditText updateCourseLocationET = findViewById(R.id.updateLocationET);
+        EditText updateCoursePriceET = findViewById(R.id.updatePriceET);
         RatingBar updateCourseRatingBar = findViewById(R.id.updateRatingBar);
         //assign these values to variables
         String updateCourseName = updateCourseNameET.getText().toString();
