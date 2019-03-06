@@ -24,7 +24,7 @@ public class AddCourse extends Base {
     }
 
     public void onAddCourseButtonPressed() {
-        Button addCourseButton = findViewById(R.id.addCourseBtn);
+        Button addCourseButton = findViewById(R.id.addCourseDoneButton);
         //click listener for add course button
         addCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override

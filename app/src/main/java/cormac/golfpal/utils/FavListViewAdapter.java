@@ -40,15 +40,16 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
+                //pops up a toast to tell the user shich course was removed from favourites
+                Toast toast = Toast.makeText(getContext(), "Removed " + course.name + " from favourites", Toast.LENGTH_LONG);
+                toast.show();
                 //passes course name to db helper to remove favourite
                 myDb.unmarkAsFavourite(course.name);
                 //removes course from dbCourselist
                 dbFavouritesList.remove(course);
                 //refreshes the list
                 notifyDataSetChanged();
-                //pops up a toast to tell the user shich course was removed from favourites
-                Toast toast = Toast.makeText(getContext(), "Removed " + course.name + " from favourites", Toast.LENGTH_LONG);
-                toast.show();
+
             }
         });
         return convertView;
@@ -68,7 +69,7 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
         String favPriceString = formatter.format(course.price);
         favCoursePriceTV.setText(favPriceString);
 
-        RatingBar favRatingBar = favListView.findViewById(R.id.clCourseRating);
+        RatingBar favRatingBar = favListView.findViewById(R.id.favCourseRating);
         favRatingBar.setRating((float) course.rating);
 
         return favListView;

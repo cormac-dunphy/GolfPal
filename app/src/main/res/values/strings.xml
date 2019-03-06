@@ -11,7 +11,14 @@
     <string name="editTitle">Edit a Course</string>
     <string name="searchCoursesLbl">Search Courses</string>
     <string name="favouritesCourseLbl">Favourite Courses</string>
-    <string name="addACourseLbl">Course Check In</string>
+    <string name="addACourseLbl">Add A Course</string>
+    <string name="favourites">favourites</string>
+    <string name="map">map</string>
+    <string name="courses">courses</string>
+    <string name="courseName">Course Name</string>
+    <string name="courseLocation">Course Location</string>
+    <string name="coursePrice">Course Price</string>
+    <string name="done">Done</string>
     <string name="addCourseBtnLbl">Add Course</string>
     <string name="updateCourseBtnLbl">Update Course</string>
     <string name="saveCourseBtn">Save Course</string>

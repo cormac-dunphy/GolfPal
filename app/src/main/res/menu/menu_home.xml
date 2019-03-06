@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/home"
+        android:icon="@drawable/location_color"
         android:onClick="menuHome"
         android:orderInCategory="100"
         android:title="Home"

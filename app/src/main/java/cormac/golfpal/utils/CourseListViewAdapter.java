@@ -53,15 +53,16 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
                         dbFavouritesList.remove(course);
                     }
                 }
+                //pop up a toast to the user which tells them which course was deleted
+                Toast toast = Toast.makeText(getContext(), "Deleted " + course.name, Toast.LENGTH_LONG);
+                toast.show();
                 //passes courses into deleteCourseRow method in db helper which removes it from the db
                 myDb.deleteCourseRow(course);
                 //remove course from the dbCourseList
                 dbCourseList.remove(course);
                 //refreshes the list
                 notifyDataSetChanged();
-                //pop up a toast to the user which tells them which course was deleted
-                Toast toast = Toast.makeText(getContext(), "Deleted " + course.name, Toast.LENGTH_LONG);
-                toast.show();
+
             }
         });
         //click listener for the favourite button on the course list on the home page
@@ -75,12 +76,12 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
                 Log.i("favCourse", "course = " + String.valueOf(course) + String.valueOf(course.favourite));
                 //adds course with favourite value set to 1 to the dbFavouritesList
                 dbFavouritesList.add(course);
+                //pops up a toast telling the user which course was favourited
+                Toast.makeText(getContext(), "Added " + course.name + " to favourites", Toast.LENGTH_LONG).show();
                 //passes the course name to the db helper to change the value of favourite field to 1 in the db
                 myDb.markAsFavourite(course.name);
                 //refreshes the list
                 notifyDataSetChanged();
-                //pops up a toast telling the user which course was favourited
-                Toast.makeText(getContext(), "Added " + course.name + " to favourites", Toast.LENGTH_LONG).show();
             }
         });
 
