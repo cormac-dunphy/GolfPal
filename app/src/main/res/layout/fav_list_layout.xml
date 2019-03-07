@@ -45,7 +45,7 @@
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@id/favCoursePrice"
         android:background="@null"
-        android:drawableEnd="@drawable/remove_fav_emoji" />
+        android:drawableEnd="@drawable/garbage" />
 
     <RatingBar
         android:id="@+id/favCourseRating"
