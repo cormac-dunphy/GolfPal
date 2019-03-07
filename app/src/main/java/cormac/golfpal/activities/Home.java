@@ -23,8 +23,6 @@ public class Home extends Base {
     TextView emptyList;
     ListView courseListView;
     DatabaseHelper myDb;
-    //FavListViewAdapter favListViewAdapter;
-    //CourseListViewAdapter courseListViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

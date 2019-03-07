@@ -26,7 +26,7 @@ public class Base extends AppCompatActivity {
     }
     //when home button pressed go to home page
     public void menuHome(MenuItem m) {
-        startActivity(new Intent(this, Home.class));
+        startActivity(new Intent(this, Map.class));
     }
     //information about the app in the menu
     public void menuInfo(MenuItem m)

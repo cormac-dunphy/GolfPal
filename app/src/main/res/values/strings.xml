@@ -19,6 +19,7 @@
     <string name="courseLocation">Course Location</string>
     <string name="coursePrice">Course Price</string>
     <string name="done">Done</string>
+    <string name="home">Home</string>
     <string name="addCourseBtnLbl">Add Course</string>
     <string name="updateCourseBtnLbl">Update Course</string>
     <string name="saveCourseBtn">Save Course</string>
