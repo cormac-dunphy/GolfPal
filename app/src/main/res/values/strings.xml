@@ -42,4 +42,5 @@
     <string name="appHelp4">4. To delete a course click the red icon to the right side of the course on the home page list.</string>
     <string name="apphelp5">5. To remove course from favourites press the red icon to the right of the course on the favourites list.</string>
     <string name="favEmptyList">You have no favourite courses yet!</string>
+    <string name="title_activity_map">Map</string>
 </resources>
