@@ -16,16 +16,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COURSES = "courses";
     public static final String COURSE_NAME = "coursename";
     public static final String COURSE_LOCATION = "courselocation";
-    public static final String COURSE_PRICE = "courseprice";
+    public static final String COURSE_PAR = "coursepar";
     public static final String COURSE_RATING = "courserating";
     public static final String COURSE_FAVOURITE = "coursefavourite";
+    public static final String COURSE_LAT = "courselat";
+    public static final String COURSE_LON = "courselon";
 
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db = this.getWritableDatabase();
         //db.execSQL("drop table courses");
-        db.execSQL("create table if not exists " + COURSES + "(id INTEGER PRIMARY KEY AUTOINCREMENT, coursename TEXT, courselocation TEXT, courseprice TEXT, courserating TEXT, coursefavourite INT)");
+        db.execSQL("create table if not exists " + COURSES + "(id INTEGER PRIMARY KEY AUTOINCREMENT, coursename TEXT, courselocation TEXT, coursepar TEXT, courserating TEXT, coursefavourite INT, courselat INT, courselon INT)");
 
     }
 
@@ -39,15 +41,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
     //insert new course to the database
-    public boolean insertCourseData(String courseName, String courseLocation, String coursePrice, String courseRating, String courseFavourite) {
+    public boolean insertCourseData(String courseName, String courseLocation, String coursePar, String courseRating, String courseFavourite, String courseLat, String courseLon) {
         SQLiteDatabase db = this.getWritableDatabase();
         //put all values into the database
         ContentValues contentValues = new ContentValues();
         contentValues.put(COURSE_NAME, courseName);
         contentValues.put(COURSE_LOCATION, courseLocation);
-        contentValues.put(COURSE_PRICE, coursePrice);
+        contentValues.put(COURSE_PAR, coursePar);
         contentValues.put(COURSE_RATING, courseRating);
         contentValues.put(COURSE_FAVOURITE, courseFavourite);
+        contentValues.put(COURSE_LAT, courseLat);
+        contentValues.put(COURSE_LON, courseLon);
         long result = db.insert(COURSES, null, contentValues);
         if (result == -1)
             return false;
@@ -64,11 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             String courseName = cursor.getString(1);
             String courseLocation = cursor.getString(2);
-            String coursePrice = cursor.getString(3);
+            String coursePar = cursor.getString(3);
             String courseRating = cursor.getString(4);
             String courseFavourite = cursor.getString(5);
+            String courseLat = cursor.getString(6);
+            String courseLon = cursor.getString(7);
             Log.i("database", "getAllCourseData: courseName - " + courseName);
-            Course course = new Course(courseName, courseLocation, Double.parseDouble(coursePrice), Double.parseDouble(courseRating), Boolean.parseBoolean(courseFavourite));
+            Course course = new Course(courseName, courseLocation, Double.parseDouble(coursePar), Double.parseDouble(courseRating), Boolean.parseBoolean(courseFavourite), Double.parseDouble(courseLat), Double.parseDouble(courseLon));
             //adds the course to arrayList
             courseArrayList.add(course);
         }
@@ -84,11 +90,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             String courseName = cursor.getString(1);
             String courseLocation = cursor.getString(2);
-            String coursePrice = cursor.getString(3);
+            String coursePar = cursor.getString(3);
             String courseRating = cursor.getString(4);
             String courseFavourite = cursor.getString(5);
+            String courseLat = cursor.getString(6);
+            String courseLon = cursor.getString(7);
             Log.i("database", "getAllCourseData: courseName - " + courseName);
-            Course course = new Course(courseName, courseLocation, Double.parseDouble(coursePrice), Double.parseDouble(courseRating), Boolean.parseBoolean(courseFavourite));
+            Course course = new Course(courseName, courseLocation, Double.parseDouble(coursePar), Double.parseDouble(courseRating), Boolean.parseBoolean(courseFavourite), Double.parseDouble(courseLat), Double.parseDouble(courseLon));
             //checks if favourite value is 1 which means it is a favourited course
             if (courseFavourite.equals("1")){
                 //adds course to favourite courses ArrayList
@@ -162,10 +170,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cleanCourseName = courseName.replaceAll("'", "''");
             cleanCourseDotName = course.name.replaceAll("'", "''");
             cleanCourseLocation = course.location.replaceAll("'", "''");
-            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_NAME + " = '" + cleanCourseDotName + "', " + COURSE_LOCATION + " = '" + cleanCourseLocation + "' , " + COURSE_PRICE + " = '" + course.price + "', " + COURSE_RATING + " = '" + course.rating + "', " + COURSE_FAVOURITE + " = '" + course.favourite + "' WHERE " + COURSE_NAME + " LIKE '%" + cleanCourseName + "%'");
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_NAME + " = '" + cleanCourseDotName + "', " + COURSE_LOCATION + " = '" + cleanCourseLocation + "' , " + COURSE_PAR + " = '" + course.par + "', " + COURSE_RATING + " = '" + course.rating + "', " + COURSE_FAVOURITE + " = '" + course.favourite + "' WHERE " + COURSE_NAME + " LIKE '%" + cleanCourseName + "%'");
             db.close();
         }else {
-            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_NAME + " = '" + course.name + "', " + COURSE_LOCATION + " = '" + course.location + "' , " + COURSE_PRICE + " = '" + course.price + "', " + COURSE_RATING + " = '" + course.rating + "', " + COURSE_FAVOURITE + " = '" + course.favourite + "' WHERE " + COURSE_NAME + " = '" + courseName + "'");
+            db.execSQL("UPDATE " + COURSES + " SET " + COURSE_NAME + " = '" + course.name + "', " + COURSE_LOCATION + " = '" + course.location + "' , " + COURSE_PAR + " = '" + course.par + "', " + COURSE_RATING + " = '" + course.rating + "', " + COURSE_FAVOURITE + " = '" + course.favourite + "' WHERE " + COURSE_NAME + " = '" + courseName + "'");
             db.close();
         }
     }

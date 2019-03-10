@@ -43,31 +43,28 @@ public class AddCourse extends Base {
         //get inputted course data from the user
         EditText courseNameET = findViewById(R.id.addNameET);
         EditText courseLocationET = findViewById(R.id.addLocationET);
-        EditText coursePriceET = findViewById(R.id.addPriceET);
+        EditText courseParET = findViewById(R.id.addParET);
         RatingBar courseRatingBar = findViewById(R.id.addRatingBar);
         //convert values to appropriate data type
         String courseName = courseNameET.getText().toString();
         String courseLocation = courseLocationET.getText().toString();
-        String coursePriceText = coursePriceET.getText().toString();
-        Double coursePrice = null;
-
-        if(coursePriceText.trim().length()!=0) {
-            coursePrice = Double.parseDouble(coursePriceText);
-        }
-
+        String courseParText = courseParET.getText().toString();
+        Double coursePar = Double.parseDouble(courseParText);
         float courseRating = courseRatingBar.getRating();
         boolean courseFavourite = false;
+        Integer courseLat = 0;
+        Integer courseLon = 0;
 
         //if any edit texts are left empty pop up a toast to enter a value
         if(courseName.trim().length()<=0){
             Toast.makeText(this, "Please Enter Course Name", Toast.LENGTH_SHORT).show();
         }else if(courseLocation.trim().length()<=0){
             Toast.makeText(this, "Please Enter Course Location", Toast.LENGTH_SHORT).show();
-        }else if(coursePriceText.trim().length()<=0) {
+        }else if(courseParText.trim().length()<=0) {
             Toast.makeText(this, "Please Enter Course Price", Toast.LENGTH_SHORT).show();
         }else{
             //if all values are entered then add the course to the database
-            myDb.insertCourseData(courseName, courseLocation, String.valueOf(coursePrice), String.valueOf(courseRating), String.valueOf(courseFavourite));
+            myDb.insertCourseData(courseName, courseLocation, String.valueOf(coursePar), String.valueOf(courseRating), String.valueOf(courseFavourite), String.valueOf(courseLat), String.valueOf(courseLon));
             //go to home page
             Intent toHome = new Intent(this, Home.class);
             startActivity(toHome);

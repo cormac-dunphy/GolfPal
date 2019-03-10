@@ -16,6 +16,8 @@ public class Update extends AppCompatActivity {
     DatabaseHelper myDb;
     String courseName;
     Boolean courseFavourite;
+    Double courseLat;
+    Double courseLon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class Update extends AppCompatActivity {
         if(extras!=null){
             courseName = extras.getString("name");
             courseFavourite = extras.getBoolean("favourite");
+            courseLat = extras.getDouble("lat");
+            courseLon = extras.getDouble("lon");
         }
 
         onUpdateCourseButtonPressed();
@@ -47,7 +51,7 @@ public class Update extends AppCompatActivity {
         //get course data inputted by user
         EditText updateCourseNameET = findViewById(R.id.updateNameET);
         EditText updateCourseLocationET = findViewById(R.id.updateLocationET);
-        EditText updateCoursePriceET = findViewById(R.id.updatePriceET);
+        EditText updateCoursePriceET = findViewById(R.id.updateParET);
         RatingBar updateCourseRatingBar = findViewById(R.id.updateRatingBar);
         //assign these values to variables
         String updateCourseName = updateCourseNameET.getText().toString();
@@ -71,7 +75,7 @@ public class Update extends AppCompatActivity {
         }else {
             //create the new updated course object
             //favourite value stays the same
-            Course course = new Course(updateCourseName, updateCourseLocation, updateCoursePrice, updateCourseRating, courseFavourite);
+            Course course = new Course(updateCourseName, updateCourseLocation, updateCoursePrice, updateCourseRating, courseFavourite, courseLat, courseLon);
             //pass the original course name and new course object to the update course method in the db helper
             myDb.updateCourse(courseName, course);
             //go to home page

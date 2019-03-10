@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -62,13 +64,8 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
         favCourseNameTV.setText(course.name);
         TextView favCourseLocationTV = favListView.findViewById(R.id.favCourseLocation);
         favCourseLocationTV.setText(course.location);
-
-        TextView favCoursePriceTV = favListView.findViewById(R.id.favCoursePrice);
-        Locale locale = Locale.FRANCE;
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
-        String favPriceString = formatter.format(course.price);
-        favCoursePriceTV.setText(favPriceString);
-
+        TextView favCourseParTV = favListView.findViewById(R.id.favCoursePar);
+        favCourseParTV.setText("Par " + String.valueOf(course.par));
         RatingBar favRatingBar = favListView.findViewById(R.id.favCourseRating);
         favRatingBar.setRating((float) course.rating);
 
