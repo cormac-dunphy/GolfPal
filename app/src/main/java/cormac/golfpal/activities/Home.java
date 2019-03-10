@@ -32,7 +32,7 @@ public class Home extends Base {
         setSupportActionBar(toolbar);
         //sets underline on courses button on create
         Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
-        courseButton.setPaintFlags(courseButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+        courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //ArrayList for the courses
         dbCourseList = new ArrayList<>();
         myDb = new DatabaseHelper(this);
@@ -94,10 +94,7 @@ public class Home extends Base {
         Log.i("courses", "courses: " + String.valueOf(dbCourseList));
 
         Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
-        courseButton.setPaintFlags(courseButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
-
-        Button favouritesButton = (Button) findViewById(R.id.homeFavouriteCoursesButton);
-        favouritesButton.setPaintFlags(favouritesButton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+        courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
         loadDataCourseList();
         super.onResume();
@@ -133,8 +130,11 @@ public class Home extends Base {
         coursesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                coursesButton.setPaintFlags(coursesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
-                favouritesButton.setPaintFlags(favouritesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+                //coursesButton.setPaintFlags(coursesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+                //favouritesButton.setPaintFlags(favouritesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+
+                coursesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
                 loadDataCourseList();
 
@@ -144,8 +144,12 @@ public class Home extends Base {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                coursesButton.setPaintFlags(coursesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
-                favouritesButton.setPaintFlags(favouritesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+                //coursesButton.setPaintFlags(coursesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+                //favouritesButton.setPaintFlags(favouritesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+
+                favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
                 loadDataFavouriteCourseList();
             }
         });
