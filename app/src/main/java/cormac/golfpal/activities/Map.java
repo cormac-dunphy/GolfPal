@@ -1,6 +1,7 @@
 package cormac.golfpal.activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +49,9 @@ public class Map extends FragmentActivity implements
     private  Location lastLocation;
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
+    String courseName;
+    Double lat;
+    Double lon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class Map extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
 
@@ -83,6 +89,15 @@ public class Map extends FragmentActivity implements
             buildGoogleApiClient();
 
             mMap.setMyLocationEnabled(true);
+        }
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            courseName = extras.getString("courseName");
+            lat = extras.getDouble("lat");
+            lon = extras.getDouble("lon");
+            addCourseMarker(courseName, lat, lon);
         }
     }
 
@@ -143,6 +158,18 @@ public class Map extends FragmentActivity implements
         startActivity(toHome);
     }
 
+    public void toAddCourse(View view) {
+        LatLng latLng = getCurrentLocation();
+
+        Double lat = latLng.latitude;
+        Double lon = latLng.longitude;
+
+        Intent toAddCourse = new Intent(Map.this, AddCourse.class);
+        toAddCourse.putExtra("lat", lat);
+        toAddCourse.putExtra("lon", lon);
+        startActivity(toAddCourse);
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         lastLocation = location;
@@ -192,4 +219,18 @@ public class Map extends FragmentActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    public LatLng getCurrentLocation()
+    {
+        LatLng latlng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
+        return latlng;
+    }
+
+    public void addCourseMarker(String courseName, double lat, double lon)
+    {
+            Log.i("addingdiffcourses", "addCourseMarker: lat, lon: " + lat + lon);
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(courseName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+    }
+
 }
