@@ -25,14 +25,14 @@
         android:text="@string/courseLocationLbl" />
 
     <TextView
-        android:id="@+id/favCoursePrice"
+        android:id="@+id/favCoursePar"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/favCourseName"
         android:layout_alignStart="@id/favCourseName"
-        android:text="@string/coursePriceLbl" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/courseParLbl" />
 
     <Button
         android:id="@+id/favRemove"
@@ -43,7 +43,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/favCoursePrice"
+        android:layout_toEndOf="@id/favCoursePar"
         android:background="@null"
         android:drawableEnd="@drawable/garbage" />
 
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/favCourseLocation"
-        android:layout_toEndOf="@id/favCoursePrice"
+        android:layout_toEndOf="@id/favCoursePar"
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:layout_centerHorizontal="true"

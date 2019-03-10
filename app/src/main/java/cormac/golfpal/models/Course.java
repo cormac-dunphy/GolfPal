@@ -10,17 +10,21 @@ public class Course implements Serializable {
     public String name;
     public String location;
     public double rating;
-    public double price;
+    public double par;
     public boolean favourite;
+    public double lat;
+    public double lon;
 
     public Course() {}
 
-    public Course(String name, String location, double price, double rating, boolean favourite)
+    public Course(String name, String location, double par, double rating, boolean favourite, double lat, double lon)
     {
         this.name = name;
         this.location = location;
         this.rating = rating;
-        this.price = price;
+        this.par = par;
+        this.lat = lat;
+        this.lon = lon;
         this.favourite = favourite;
     }
 
@@ -57,16 +61,16 @@ public class Course implements Serializable {
     }
 
     public double getPrice() {
-        return price;
+        return par;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.par = price;
     }
 
     @Override
     public String toString() {
         return name + ", " + location + ", " + rating
-                + ", " + price;
+                + ", " + par + ", " + lat + ", " + lon;
     }
 }

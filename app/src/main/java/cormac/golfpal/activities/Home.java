@@ -53,6 +53,8 @@ public class Home extends Base {
                 Intent toUpdate = new Intent(Home.this, Update.class);
                 toUpdate.putExtra("name", course.name);
                 toUpdate.putExtra("favourite", course.favourite);
+                toUpdate.putExtra("lat", course.lat);
+                toUpdate.putExtra("lon", course.lon);
                 startActivity(toUpdate);
 
                 return true;

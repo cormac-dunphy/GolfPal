@@ -95,14 +95,8 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
         courseName.setText(course.name);
         TextView courseLocation = courseListView.findViewById(R.id.clCourseLocation);
         courseLocation.setText(course.location);
-        TextView coursePrice = courseListView.findViewById(R.id.clCoursePrice);
-        //using number formatter ro display the price value as a price "5,00€"
-        Locale locale = Locale.FRANCE;
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
-        String priceString = formatter.format(course.price);
-        Log.i("courselist", "BindView: priceString = " + priceString);
-
-        coursePrice.setText(priceString);
+        TextView coursePar = courseListView.findViewById(R.id.clCoursePar);
+        coursePar.setText("Par " + String.valueOf(course.par));
         RatingBar courseRating = courseListView.findViewById(R.id.clCourseRating);
         courseRating.setRating((float) course.rating);
 

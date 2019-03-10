@@ -41,14 +41,14 @@
         android:text="@string/courseLocationLbl" />
 
     <TextView
-        android:id="@+id/clCoursePrice"
+        android:id="@+id/clCoursePar"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_below="@id/clCourseName"
         android:layout_alignStart="@id/clCourseName"
-        android:text="@string/coursePriceLbl" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/courseParLbl" />
 
     <RatingBar
         android:id="@+id/clCourseRating"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/clCourseLocation"
-        android:layout_toEndOf="@id/clCoursePrice"
+        android:layout_toEndOf="@id/clCoursePar"
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:layout_centerHorizontal="true"
@@ -71,7 +71,7 @@
         android:layout_marginEnd="10dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_toEndOf="@id/clCoursePrice"
+        android:layout_toEndOf="@id/clCoursePar"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>
 
