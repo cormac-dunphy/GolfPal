@@ -13,15 +13,30 @@
         android:layout_height="638dp"
         android:layout_alignParentTop="true"
         tools:context=".activities.Map" />
-
-    <Button
-        android:id="@+id/homeButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorLightGreen"
-        android:gravity="center"
-        android:onClick="toHome"
-        android:text="@string/home"
-        android:textColor="@color/colorFontWhite" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/homeButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/colorLightGreen"
+            android:onClick="toHome"
+            android:layout_weight="1"
+            android:text="@string/home"
+            android:textColor="@color/colorFontWhite" />
+
+        <Button
+            android:id="@+id/checkInButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@color/colorLightGreen"
+            android:onClick="toAddCourse"
+            android:text="@string/checkIn"
+            android:textColor="@color/colorFontWhite" />
+    </LinearLayout>
 </RelativeLayout>

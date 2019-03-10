@@ -44,4 +44,5 @@
     <string name="apphelp5">5. To remove course from favourites press the red icon to the right of the course on the favourites list.</string>
     <string name="favEmptyList">You have no favourite courses yet!</string>
     <string name="title_activity_map">Map</string>
+    <string name="checkIn">Check In At Course</string>
 </resources>
