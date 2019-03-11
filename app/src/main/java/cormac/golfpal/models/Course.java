@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 //Course object
 public class Course implements Serializable {
+    public String courseId;
     public String name;
     public String location;
     public double rating;
@@ -17,8 +18,9 @@ public class Course implements Serializable {
 
     public Course() {}
 
-    public Course(String name, String location, double par, double rating, boolean favourite, double lat, double lon)
+    public Course(String courseId, String name, String location, double par, double rating, boolean favourite, double lat, double lon)
     {
+        this.courseId = courseId;
         this.name = name;
         this.location = location;
         this.rating = rating;
@@ -60,17 +62,41 @@ public class Course implements Serializable {
         this.rating = rating;
     }
 
-    public double getPrice() {
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public double getPar() {
         return par;
     }
 
-    public void setPrice(double price) {
-        this.par = price;
+    public void setPar(double par) {
+        this.par = par;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 
     @Override
     public String toString() {
-        return name + ", " + location + ", " + rating
+        return courseId + ", " + name + ", " + location + ", " + rating
                 + ", " + par + ", " + lat + ", " + lon;
     }
 }

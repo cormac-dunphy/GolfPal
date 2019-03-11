@@ -1,5 +1,6 @@
 package cormac.golfpal.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,49 +13,83 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Locale;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
+
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import static cormac.golfpal.activities.Base.dbFavouritesList;
 
 public class FavListViewAdapter extends ArrayAdapter<Course> {
-    private LayoutInflater theInflater = null;
-    DatabaseHelper myDb = new DatabaseHelper(getContext());
+    private List<Course> favList;
+    private Activity context;
 
-    public FavListViewAdapter(@NonNull Context context, ArrayList<Course> favouritelist) {
-        super(context, R.layout.fav_list_layout, favouritelist);
-        theInflater = LayoutInflater.from(getContext());
+    public FavListViewAdapter(@NonNull Activity context, List<Course> favList) {
+        super(context, R.layout.fav_list_layout, favList);
+        this.favList = favList;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if(convertView == null){
-            convertView = theInflater.inflate(R.layout.fav_list_layout, parent, false);
-        }
-        convertView = BindView(position, convertView);
-        //click listener for remove favourite button on favourite page
-        Button removeFavourite = convertView.findViewById(R.id.favRemove);
-        removeFavourite.setOnClickListener(new View.OnClickListener() {
+
+        LayoutInflater inflater = context.getLayoutInflater();
+
+        View favListItem = inflater.inflate(R.layout.fav_list_layout, null, true);
+
+        TextView courseName = favListItem.findViewById(R.id.favCourseName);
+        TextView courseLocation = favListItem.findViewById(R.id.favCourseLocation);
+        TextView coursePar = favListItem.findViewById(R.id.favCoursePar);
+        RatingBar courseRating = favListItem.findViewById(R.id.favCourseRating);
+
+        Course course = favList.get(position);
+
+        courseName.setText(course.getName());
+        courseLocation.setText(course.getLocation());
+        coursePar.setText(String.valueOf(course.getPar()));
+        courseRating.setRating((float) course.getRating());
+
+        Button favRemove = favListItem.findViewById(R.id.favRemove);
+        favRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
-                //pops up a toast to tell the user shich course was removed from favourites
-                Toast toast = Toast.makeText(getContext(), "Removed " + course.name + " from favourites", Toast.LENGTH_LONG);
-                toast.show();
-                //passes course name to db helper to remove favourite
-                myDb.unmarkAsFavourite(course.name);
-                //removes course from dbCourselist
-                dbFavouritesList.remove(course);
-                //refreshes the list
-                notifyDataSetChanged();
 
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("courses").child(course.courseId);
+
+                Course markAsFavourite = new Course(course.courseId, course.getName(), course.getLocation(), course.getPar(), course.getRating(), false, course.getLat(), course.getLon());
+
+                databaseReference.setValue(markAsFavourite);
+
+                Toast.makeText(getContext(), "Removed Course from Favourites", Toast.LENGTH_SHORT).show();
             }
         });
-        return convertView;
+//        if(convertView == null){
+//            convertView = theInflater.inflate(R.layout.fav_list_layout, parent, false);
+//        }
+//        convertView = BindView(position, convertView);
+//        //click listener for remove favourite button on favourite page
+//        Button removeFavourite = convertView.findViewById(R.id.favRemove);
+//        removeFavourite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Course course = getItem(position);
+//                //pops up a toast to tell the user shich course was removed from favourites
+//                Toast toast = Toast.makeText(getContext(), "Removed " + course.name + " from favourites", Toast.LENGTH_LONG);
+//                toast.show();
+//                //passes course name to db helper to remove favourite
+//                //myDb.unmarkAsFavourite(course.name);
+//                //removes course from dbCourselist
+//                dbFavouritesList.remove(course);
+//                //refreshes the list
+//                notifyDataSetChanged();
+//
+//            }
+//        });
+        return favListItem;
     }
     //binds data to the favourite view
     private View BindView(int position, View favListView){

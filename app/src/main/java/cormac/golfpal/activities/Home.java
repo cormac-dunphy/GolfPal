@@ -3,6 +3,7 @@ package cormac.golfpal.activities;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -12,17 +13,32 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.CourseListViewAdapter;
-import cormac.golfpal.utils.DatabaseHelper;
+//import cormac.golfpal.utils.DatabaseHelper;
 import cormac.golfpal.utils.FavListViewAdapter;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class Home extends Base {
     TextView emptyList;
     ListView courseListView;
-    DatabaseHelper myDb;
+    DatabaseReference databaseCourses;
+    List<Course> courseList;
+    List<Course> favList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +46,16 @@ public class Home extends Base {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        FirebaseApp.initializeApp(this);
+        databaseCourses = FirebaseDatabase.getInstance().getReference("courses");
+        courseList = new ArrayList<>();
+        favList = new ArrayList<>();
         //sets underline on courses button on create
         Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
         courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         //ArrayList for the courses
         dbCourseList = new ArrayList<>();
-        myDb = new DatabaseHelper(this);
+        //myDb = new DatabaseHelper(this);
         buttonHandlers();
         //setting list view to emptyList text view if it is empty
         emptyList = findViewById(R.id.emptyList);
@@ -49,8 +69,9 @@ public class Home extends Base {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Course course = (Course) courseListView.getItemAtPosition(i);
-
+                Log.i("updateCourse", "onItemLongClick: Home courseId: " + course.courseId);
                 Intent toUpdate = new Intent(Home.this, Update.class);
+                toUpdate.putExtra("courseId", course.courseId);
                 toUpdate.putExtra("name", course.name);
                 toUpdate.putExtra("favourite", course.favourite);
                 toUpdate.putExtra("lat", course.lat);
@@ -60,12 +81,73 @@ public class Home extends Base {
                 return true;
             }
         });
+
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        databaseCourses.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                courseList.clear();
+
+                for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
+                {
+                    Course course = courseSnapShot.getValue(Course.class);
+
+                    courseList.add(course);
+                }
+
+                CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(Home.this, courseList);
+                courseListView.setAdapter(courseListViewAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    protected  void getFavourites()
+    {
+        databaseCourses.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                favList.clear();
+
+                for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
+                {
+                    Course course = courseSnapShot.getValue(Course.class);
+
+                    if(course.favourite == true)
+                    {
+                        favList.add(course);
+                    }else{
+                        Log.i("favourites", "No favourites added");
+                    }
+
+                }
+
+                FavListViewAdapter favListViewAdapter = new FavListViewAdapter(Home.this, favList);
+                courseListView.setAdapter(favListViewAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void loadDataCourseList() {
         //goes to db helper and returns list of courses in database
-        dbCourseList = myDb.getAllCourseData();
+        //dbCourseList = myDb.getAllCourseData();
         Log.i("database", "loadDataCourseList: dbCourseList - " + String.valueOf(dbCourseList));
         //sets courseListView to use the list of courses retrieved
         CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, dbCourseList);
@@ -74,7 +156,7 @@ public class Home extends Base {
     }
 
     private void loadDataFavouriteCourseList(){
-        dbFavouritesList = myDb.getFavouriteCourseData();
+        //dbFavouritesList = myDb.getFavouriteCourseData();
         FavListViewAdapter favListViewAdapter = new FavListViewAdapter(this, dbFavouritesList);
         courseListView.setAdapter(favListViewAdapter);
         favListViewAdapter.notifyDataSetChanged();
@@ -136,8 +218,8 @@ public class Home extends Base {
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-                loadDataCourseList();
-
+                //loadDataCourseList();
+                onStart();
             }
         });
 
@@ -150,7 +232,8 @@ public class Home extends Base {
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-                loadDataFavouriteCourseList();
+                //loadDataFavouriteCourseList();
+                getFavourites();
             }
         });
 
