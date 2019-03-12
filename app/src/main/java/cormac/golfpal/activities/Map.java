@@ -34,8 +34,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import cormac.golfpal.R;
+import cormac.golfpal.models.Course;
+import cormac.golfpal.utils.FavListViewAdapter;
 
 public class Map extends FragmentActivity implements
         OnMapReadyCallback,
@@ -52,6 +59,7 @@ public class Map extends FragmentActivity implements
     String courseName;
     Double lat;
     Double lon;
+    DatabaseReference coursesDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +76,7 @@ public class Map extends FragmentActivity implements
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        coursesDatabase = FirebaseDatabase.getInstance().getReference("courses");
     }
 
 
@@ -99,6 +108,8 @@ public class Map extends FragmentActivity implements
             lon = extras.getDouble("lon");
             addCourseMarker(courseName, lat, lon);
         }
+
+        addCourseMarkers();
     }
 
     public boolean checkUserLocationPermission()
@@ -231,6 +242,32 @@ public class Map extends FragmentActivity implements
     {
             Log.i("addingdiffcourses", "addCourseMarker: lat, lon: " + lat + lon);
             mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(courseName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+    }
+
+    protected  void addCourseMarkers()
+    {
+        coursesDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
+                {
+                    Course course = courseSnapShot.getValue(Course.class);
+
+                    if(course.lat != 0 || course.lon != 0)
+                    {
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(course.lat, course.lon)).title(course.name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    }else{
+                        Log.i("favourites", "No favourites added");
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(Map.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
