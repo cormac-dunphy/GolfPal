@@ -16,9 +16,6 @@ import cormac.golfpal.models.Course;
 
 public class Base extends AppCompatActivity {
 
-    public static ArrayList<Course> dbCourseList = new ArrayList<>();
-    public static ArrayList<Course> dbFavouritesList = new ArrayList<>();
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);

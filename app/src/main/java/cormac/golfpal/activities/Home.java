@@ -50,12 +50,10 @@ public class Home extends Base {
         databaseCourses = FirebaseDatabase.getInstance().getReference("courses");
         courseList = new ArrayList<>();
         favList = new ArrayList<>();
-        //sets underline on courses button on create
+        //sets background on courses button on create
         Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
         courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        //ArrayList for the courses
-        dbCourseList = new ArrayList<>();
-        //myDb = new DatabaseHelper(this);
+        //method for handling the buttons
         buttonHandlers();
         //setting list view to emptyList text view if it is empty
         emptyList = findViewById(R.id.emptyList);
@@ -63,7 +61,6 @@ public class Home extends Base {
         courseListView.setEmptyView(emptyList);
         courseListView.setLongClickable(true);
 
-        loadDataCourseList();
         //long click listener for courses which brings user to an update course screen
         courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -81,31 +78,23 @@ public class Home extends Base {
                 return true;
             }
         });
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         databaseCourses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 courseList.clear();
-
                 for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
                 {
                     Course course = courseSnapShot.getValue(Course.class);
-
                     courseList.add(course);
                 }
-
                 CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(Home.this, courseList);
                 courseListView.setAdapter(courseListViewAdapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
@@ -118,22 +107,17 @@ public class Home extends Base {
         databaseCourses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 favList.clear();
-
                 for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
                 {
                     Course course = courseSnapShot.getValue(Course.class);
-
                     if(course.favourite == true)
                     {
                         favList.add(course);
                     }else{
                         Log.i("favourites", "No favourites added");
                     }
-
                 }
-
                 FavListViewAdapter favListViewAdapter = new FavListViewAdapter(Home.this, favList);
                 courseListView.setAdapter(favListViewAdapter);
             }
@@ -145,41 +129,11 @@ public class Home extends Base {
         });
     }
 
-    private void loadDataCourseList() {
-        //goes to db helper and returns list of courses in database
-        //dbCourseList = myDb.getAllCourseData();
-        Log.i("database", "loadDataCourseList: dbCourseList - " + String.valueOf(dbCourseList));
-        //sets courseListView to use the list of courses retrieved
-        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, dbCourseList);
-        courseListView.setAdapter(courseListViewAdapter);
-        courseListViewAdapter.notifyDataSetChanged();
-    }
-
-    private void loadDataFavouriteCourseList(){
-        //dbFavouritesList = myDb.getFavouriteCourseData();
-        FavListViewAdapter favListViewAdapter = new FavListViewAdapter(this, dbFavouritesList);
-        courseListView.setAdapter(favListViewAdapter);
-        favListViewAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
-    }
-
-    public void onResume() {
-        //refreshes the courseListView on resume
-        CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(this, dbCourseList);
-        courseListViewAdapter.notifyDataSetChanged();
-        Log.i("courses", "courses: " + String.valueOf(dbCourseList));
-
-        Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
-        courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-
-        loadDataCourseList();
-        super.onResume();
     }
 
     @Override
@@ -199,11 +153,6 @@ public class Home extends Base {
     {
         startActivity(new Intent(this,AddCourse.class));
     }
-    //goes to favourites page
-    public void toFavourites(View v)
-    {
-        startActivity(new Intent(this, Favourite.class));
-    }
 
     public void buttonHandlers(){
         final Button coursesButton = (Button) findViewById(R.id.homeCoursesButton);
@@ -212,9 +161,6 @@ public class Home extends Base {
         coursesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //coursesButton.setPaintFlags(coursesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
-                //favouritesButton.setPaintFlags(favouritesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
-
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -226,13 +172,9 @@ public class Home extends Base {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //coursesButton.setPaintFlags(coursesButton.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
-                //favouritesButton.setPaintFlags(favouritesButton.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
-
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-                //loadDataFavouriteCourseList();
                 getFavourites();
             }
         });

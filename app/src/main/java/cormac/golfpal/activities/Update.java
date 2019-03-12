@@ -34,8 +34,6 @@ public class Update extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
-        //myDb = new DatabaseHelper(this);
-        //get courseName and courseFavourite sent in intent and set to variables
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             courseId = extras.getString("courseId");
@@ -98,41 +96,4 @@ public class Update extends AppCompatActivity {
             Toast.makeText(this, "Course Updated", Toast.LENGTH_SHORT).show();
 
         }
-
-//        private void updateCourse() {
-//            //get course data inputted by user
-//            EditText updateCourseNameET = findViewById(R.id.updateNameET);
-//            EditText updateCourseLocationET = findViewById(R.id.updateLocationET);
-//            EditText updateCoursePriceET = findViewById(R.id.updateParET);
-//            RatingBar updateCourseRatingBar = findViewById(R.id.updateRatingBar);
-//            //assign these values to variables
-//            String updateCourseName = updateCourseNameET.getText().toString();
-//            String updateCourseLocation = updateCourseLocationET.getText().toString();
-//            //convert coursePrice to double
-//            String updateCoursePriceText = updateCoursePriceET.getText().toString();
-//            Double updateCoursePrice = null;
-//
-//            if(updateCoursePriceText.trim().length()!=0) {
-//                updateCoursePrice = Double.parseDouble(updateCoursePriceText);
-//            }
-//
-//            float updateCourseRating = updateCourseRatingBar.getRating();
-//            //if edit texts are left blank prompt the user to input value
-//            if(updateCourseName.trim().length()<=0){
-//                Toast.makeText(this, "Please Enter Course Name", Toast.LENGTH_SHORT).show();
-//            }else if(updateCourseLocation.trim().length()<=0){
-//                Toast.makeText(this, "Please Enter Course Location", Toast.LENGTH_SHORT).show();
-//            }else if(updateCoursePriceText.trim().length()<=0) {
-//                Toast.makeText(this, "Please Enter Course Price", Toast.LENGTH_SHORT).show();
-//            }else {
-//                //create the new updated course object
-//                //favourite value stays the same
-//                //Course course = new Course(updateCourseName, updateCourseLocation, updateCoursePrice, updateCourseRating, courseFavourite, courseLat, courseLon);
-//                //pass the original course name and new course object to the update course method in the db helper
-//                //myDb.updateCourse(courseName, course);
-//                //go to home page
-//                Intent toHome = new Intent(Update.this, Home.class);
-//                startActivity(toHome);
-//            }
-//        }
     }
