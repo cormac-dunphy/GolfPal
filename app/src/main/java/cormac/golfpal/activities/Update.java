@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,6 +31,8 @@ public class Update extends AppCompatActivity {
     EditText newParET;
     RatingBar newRatingRB;
     Button updateCourseButton;
+    FirebaseUser user;
+    DatabaseReference databaseCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class Update extends AppCompatActivity {
         newParET = findViewById(R.id.updateParET);
         newRatingRB = findViewById(R.id.updateRatingBar);
         updateCourseButton = findViewById(R.id.updateCourseDoneButton);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
 
         onUpdateCourseButtonPressed();
     }
@@ -76,8 +83,6 @@ public class Update extends AppCompatActivity {
 
         private void update(String id)
         {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("courses").child(id);
-
             //get course data inputted by user
             EditText updateCourseNameET = findViewById(R.id.updateNameET);
             EditText updateCourseLocationET = findViewById(R.id.updateLocationET);
@@ -91,7 +96,7 @@ public class Update extends AppCompatActivity {
 
             Course course = new Course(id, name, location, par, rating, favourite, lat, lon);
 
-            databaseReference.setValue(course);
+            databaseCourses.child(id).setValue(course);
 
             Toast.makeText(this, "Course Updated", Toast.LENGTH_SHORT).show();
 
