@@ -11,15 +11,21 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 public class FavListViewAdapter extends ArrayAdapter<Course> {
     private List<Course> favList;
     private Activity context;
+    FirebaseUser user;
 
     public FavListViewAdapter(@NonNull Activity context, List<Course> favList) {
         super(context, R.layout.fav_list_layout, favList);
@@ -52,31 +58,28 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("courses").child(course.courseId);
-
-                Course markAsFavourite = new Course(course.courseId, course.getName(), course.getLocation(), course.getPar(), course.getRating(), false, course.getLat(), course.getLon());
-
-                databaseReference.setValue(markAsFavourite);
-
-                Toast.makeText(getContext(), "Removed Course from Favourites", Toast.LENGTH_SHORT).show();
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                Course unmarkAsFavourite = new Course(course.courseId, course.getName(), course.getLocation(), course.getPar(), course.getRating(), false, course.getLat(), course.getLon());
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
+                databaseReference.setValue(unmarkAsFavourite);
+                Toast.makeText(getContext(), "Course Removed from Favourites", LENGTH_SHORT).show();
             }
         });
         return favListItem;
     }
-    //binds data to the favourite view
-    private View BindView(int position, View favListView){
-        Course course = getItem(position);
-
-        TextView favCourseNameTV = favListView.findViewById(R.id.favCourseName);
-        favCourseNameTV.setText(course.name);
-        TextView favCourseLocationTV = favListView.findViewById(R.id.favCourseLocation);
-        favCourseLocationTV.setText(course.location);
-        TextView favCourseParTV = favListView.findViewById(R.id.favCoursePar);
-        favCourseParTV.setText("Par " + String.valueOf(course.par));
-        RatingBar favRatingBar = favListView.findViewById(R.id.favCourseRating);
-        favRatingBar.setRating((float) course.rating);
-
-        return favListView;
-    }
+//    //binds data to the favourite view
+//    private View BindView(int position, View favListView){
+//        Course course = getItem(position);
+//
+//        TextView favCourseNameTV = favListView.findViewById(R.id.favCourseName);
+//        favCourseNameTV.setText(course.name);
+//        TextView favCourseLocationTV = favListView.findViewById(R.id.favCourseLocation);
+//        favCourseLocationTV.setText(course.location);
+//        TextView favCourseParTV = favListView.findViewById(R.id.favCoursePar);
+//        favCourseParTV.setText("Par " + String.valueOf(course.par));
+//        RatingBar favRatingBar = favListView.findViewById(R.id.favCourseRating);
+//        favRatingBar.setRating((float) course.rating);
+//
+//        return favListView;
+//    }
 }

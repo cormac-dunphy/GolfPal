@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import cormac.golfpal.R;
@@ -23,7 +26,8 @@ public class AddCourse extends Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
-        databaseCourses = FirebaseDatabase.getInstance().getReference("courses");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
 
         Bundle extras = getIntent().getExtras();
         if(extras != null)
