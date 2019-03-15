@@ -2,23 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cormac.golfpal.activities.Home">
-    <item android:id="@+id/menu_help"
-        android:title="Help"
-        android:orderInCategory="100"
-        android:onClick="menuHelp"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/menu_info"
-        android:title="Info"
-        android:orderInCategory="100"
-        android:onClick="menuInfo"
-        app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_home"
+        android:id="@+id/menuLogOut"
+        android:icon="@drawable/exit"
+        android:onClick="menuLogOut"
+        android:title="@string/logout"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menuMap"
         android:icon="@drawable/location_color"
-        android:onClick="menuHome"
-        android:orderInCategory="100"
+        android:onClick="menuMap"
         android:title="Home"
         app:showAsAction="ifRoom" />
+
 </menu>

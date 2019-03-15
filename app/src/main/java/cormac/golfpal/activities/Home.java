@@ -12,10 +12,13 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +50,17 @@ public class Home extends Base {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FirebaseApp.initializeApp(this);
-        databaseCourses = FirebaseDatabase.getInstance().getReference("courses");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Log.i("googleSignIn", "onCreate: user = " + user);
+        if(user == null){
+            Intent toSignIn = new Intent(Home.this, SignIn.class);
+            startActivity(toSignIn);
+        }else {
+            databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
+        }
+
+        checkUser();
+
         courseList = new ArrayList<>();
         favList = new ArrayList<>();
         //sets background on courses button on create
@@ -80,30 +93,45 @@ public class Home extends Base {
         });
     }
 
+    private boolean checkUser() {
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            Log.i("googleSignIn", "checkUser: user is null");
+            return false;
+        }else{
+            Log.i("googleSignIn", "checkUser: user = " + FirebaseAuth.getInstance().getCurrentUser());
+            return true;
+        }
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        databaseCourses.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                courseList.clear();
-                for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
-                {
-                    Course course = courseSnapShot.getValue(Course.class);
-                    courseList.add(course);
+        if (checkUser() == false) {
+            Intent toSignIn = new Intent(Home.this, SignIn.class);
+            startActivity(toSignIn);
+        } else {
+            databaseCourses.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    courseList.clear();
+                    for (DataSnapshot courseSnapShot : dataSnapshot.getChildren()) {
+                        Course course = courseSnapShot.getValue(Course.class);
+                        courseList.add(course);
+                    }
+                    CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(Home.this, courseList);
+                    courseListView.setAdapter(courseListViewAdapter);
                 }
-                CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(Home.this, courseList);
-                courseListView.setAdapter(courseListViewAdapter);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
-    protected  void getFavourites()
-    {
+    protected  void getFavourites() {
         databaseCourses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -151,6 +179,7 @@ public class Home extends Base {
     //goes to add course page
     public void add(View v)
     {
+        //startActivity(new Intent(this, SignIn.class));
         startActivity(new Intent(this,AddCourse.class));
     }
 
@@ -180,5 +209,4 @@ public class Home extends Base {
         });
 
     }
-
 }

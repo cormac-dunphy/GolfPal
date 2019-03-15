@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
@@ -22,6 +25,7 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
     //layout inflater
     private List<Course> courseList;
     private Activity context;
+    FirebaseUser user;
 
     public CourseListViewAdapter(Activity context, List<Course> courseList) {
         super(context, R.layout.course_list_layout, courseList);
@@ -54,8 +58,8 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("courses").child(course.courseId);
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
                 databaseReference.removeValue();
                 Toast.makeText(getContext(), "Course Deleted", LENGTH_SHORT).show();
             }
@@ -66,16 +70,14 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             @Override
             public void onClick(View view) {
                 Course course = getItem(position);
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("courses").child(course.courseId);
-
+                user = FirebaseAuth.getInstance().getCurrentUser();
                 Course markAsFavourite = new Course(course.courseId, course.getName(), course.getLocation(), course.getPar(), course.getRating(), true, course.getLat(), course.getLon());
-
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
                 databaseReference.setValue(markAsFavourite);
-
-                Toast.makeText(getContext(), "Favourited Course", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Course Favourited", LENGTH_SHORT).show();
             }
         });
         return courseListItem;
     }
 }
+
