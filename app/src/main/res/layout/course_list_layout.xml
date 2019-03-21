@@ -20,45 +20,22 @@
 
     <TextView
         android:id="@+id/clCourseName"
-        android:layout_width="175dp"
-        android:maxWidth="125dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@id/clFavouriteBtn"
         android:text="@string/courseNameLbl"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/clCourseLocation"
-        android:layout_width="125dp"
-        android:maxWidth="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/clCourseName"
-        android:text="@string/courseLocationLbl" />
-
-    <TextView
-        android:id="@+id/clCoursePar"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/clCourseName"
-        android:layout_alignStart="@id/clCourseName"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/courseParLbl" />
+        android:textSize="18sp" />
 
     <RatingBar
         android:id="@+id/clCourseRating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/clCourseLocation"
-        android:layout_toEndOf="@id/clCoursePar"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:layout_below="@id/clCourseName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 
@@ -71,7 +48,6 @@
         android:layout_marginEnd="10dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_toEndOf="@id/clCoursePar"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"/>
 

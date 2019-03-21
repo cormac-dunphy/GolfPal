@@ -2,6 +2,7 @@ package cormac.golfpal.activities;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +52,8 @@ public class Home extends Base {
         setSupportActionBar(toolbar);
         FirebaseApp.initializeApp(this);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Uri photourl = user.getPhotoUrl();
+        Log.i("photourl", "onCreate: " + String.valueOf(photourl));
         Log.i("googleSignIn", "onCreate: user = " + user);
         if(user == null){
             Intent toSignIn = new Intent(Home.this, SignIn.class);

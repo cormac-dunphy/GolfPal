@@ -1,6 +1,8 @@
 package cormac.golfpal.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -42,15 +44,15 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
         View courseListItem = inflater.inflate(R.layout.course_list_layout, null, true);
 
         TextView courseName = courseListItem.findViewById(R.id.clCourseName);
-        TextView courseLocation = courseListItem.findViewById(R.id.clCourseLocation);
-        TextView coursePar = courseListItem.findViewById(R.id.clCoursePar);
+//        TextView courseLocation = courseListItem.findViewById(R.id.clCourseLocation);
+//        TextView coursePar = courseListItem.findViewById(R.id.clCoursePar);
         RatingBar courseRating = courseListItem.findViewById(R.id.clCourseRating);
 
         Course course = courseList.get(position);
 
         courseName.setText(course.getName());
-        courseLocation.setText(course.getLocation());
-        coursePar.setText(String.valueOf(course.getPar()));
+//        courseLocation.setText(course.getLocation());
+//        coursePar.setText(String.valueOf(course.getPar()));
         courseRating.setRating((float) course.getRating());
 
         Button deleteButton = courseListItem.findViewById(R.id.clDeleteBtn);
@@ -59,9 +61,26 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
             public void onClick(View view) {
                 Course course = getItem(position);
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
-                databaseReference.removeValue();
-                Toast.makeText(getContext(), "Course Deleted", LENGTH_SHORT).show();
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
+
+                AlertDialog.Builder aBuilder = new AlertDialog.Builder(getContext());
+                aBuilder.setMessage("Are you sure you want to delete " + course.getName() + "?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                databaseReference.removeValue();
+                                Toast.makeText(getContext(), "Course Deleted", LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = aBuilder.create();
+                alertDialog.setTitle("Delete a Course");
+                alertDialog.show();
             }
         });
 
