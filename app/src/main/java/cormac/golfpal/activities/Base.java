@@ -29,7 +29,7 @@ import cormac.golfpal.utils.CourseListViewAdapter;
  */
 
 public class Base extends AppCompatActivity {
-    Account account = new Account();
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
