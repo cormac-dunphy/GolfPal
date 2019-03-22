@@ -45,7 +45,7 @@ public class Base extends AppCompatActivity {
         Log.i("searchCourses", "menuSearch: in menu search");
     }
 
-    public void menuLogOut(MenuItem item) {
-        startActivity(new Intent(getApplicationContext(), Account.class));
-    }
+//    public void menuLogOut(MenuItem item) {
+//////        startActivity(new Intent(getApplicationContext(), Account.class));
+//////    }
 }

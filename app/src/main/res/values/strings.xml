@@ -61,4 +61,6 @@
         completions."
     </string>
     <string name="logout">Log Out</string>
+    <string name="userName">username</string>
+    <string name="userEmail">user email</string>
 </resources>
