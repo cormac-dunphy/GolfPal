@@ -7,4 +7,6 @@
     <color name="colorFontOffWhite">#F7F7F7</color>
     <color name="colorFontBlack">#000000</color>
     <color name="colorLightGreen">#26CEAB</color>
+    <color name="colorGrey">#7D7D7D</color>
+    <color name="colorGold">#CFB53B</color>
 </resources>

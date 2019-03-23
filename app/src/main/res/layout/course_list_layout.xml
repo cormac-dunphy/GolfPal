@@ -20,13 +20,28 @@
 
     <TextView
         android:id="@+id/clCourseName"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
+        android:maxWidth="130dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/clFavouriteBtn"
+        android:layout_marginStart="20dp"
         android:layout_marginBottom="10dp"
         android:text="@string/courseNameLbl"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/clCoursePar"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/clFavouriteBtn"
+        android:layout_below="@id/clCourseName"
+        android:maxWidth="130dp"
+        android:text="@string/courseParLbl"
+        android:textColor="@color/colorGrey"
+        android:textSize="14sp" />
 
     <RatingBar
         android:id="@+id/clCourseRating"
@@ -35,9 +50,10 @@
         android:layout_height="wrap_content"
         android:scaleX="0.9"
         android:scaleY="0.9"
-        android:layout_below="@id/clCourseName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/clCourseName"
+        android:layout_marginTop="5dp"
+        android:theme="@style/myCoursesRatingBar"/>
 
     <Button
         android:id="@+id/clDeleteBtn"

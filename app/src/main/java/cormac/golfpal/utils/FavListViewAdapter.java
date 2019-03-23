@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
@@ -42,15 +44,22 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
         View favListItem = inflater.inflate(R.layout.fav_list_layout, null, true);
 
         TextView courseName = favListItem.findViewById(R.id.favCourseName);
-        TextView courseLocation = favListItem.findViewById(R.id.favCourseLocation);
+        //TextView courseLocation = favListItem.findViewById(R.id.favCourseLocation);
         TextView coursePar = favListItem.findViewById(R.id.favCoursePar);
         RatingBar courseRating = favListItem.findViewById(R.id.favCourseRating);
 
         Course course = favList.get(position);
 
         courseName.setText(course.getName());
-        courseLocation.setText(course.getLocation());
-        coursePar.setText(String.valueOf(course.getPar()));
+        //courseLocation.setText(course.getLocation());
+        //coursePar.setText(String.valueOf(course.getPar()));
+
+        DecimalFormat format = new DecimalFormat("0.#");
+        String par = String.valueOf(format.format(course.getPar()));
+
+        coursePar.setText("Par " + par);
+        courseRating.setRating((float) course.getRating());
+
         courseRating.setRating((float) course.getRating());
 
         Button favRemove = favListItem.findViewById(R.id.favRemove);
@@ -67,19 +76,4 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
         });
         return favListItem;
     }
-//    //binds data to the favourite view
-//    private View BindView(int position, View favListView){
-//        Course course = getItem(position);
-//
-//        TextView favCourseNameTV = favListView.findViewById(R.id.favCourseName);
-//        favCourseNameTV.setText(course.name);
-//        TextView favCourseLocationTV = favListView.findViewById(R.id.favCourseLocation);
-//        favCourseLocationTV.setText(course.location);
-//        TextView favCourseParTV = favListView.findViewById(R.id.favCoursePar);
-//        favCourseParTV.setText("Par " + String.valueOf(course.par));
-//        RatingBar favRatingBar = favListView.findViewById(R.id.favCourseRating);
-//        favRatingBar.setRating((float) course.rating);
-//
-//        return favListView;
-//    }
 }

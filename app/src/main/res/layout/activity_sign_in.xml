@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".activities.SignIn">
 
+    <ImageView
+        android:id="@+id/signInImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:contentDescription="signInImage"
+        android:src="@drawable/golf_ball_marker_green_256" />
+
     <com.google.android.gms.common.internal.SignInButtonImpl
         android:id="@+id/googleButton"
         android:layout_width="match_parent"
@@ -17,5 +26,32 @@
         android:paddingStart="20dp"
         android:text="@string/sign_in_with_google"
         android:textColor="@color/colorFontWhite"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signInImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:id="@+id/signInGolfTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signInImage"
+            android:text="@string/golf"
+            android:textColor="@color/colorPrimary"
+            android:textSize="50dp"/>
+
+        <TextView
+            android:id="@+id/signInPalTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signInImage"
+            android:layout_toEndOf="@id/signInGolfTV"
+            android:text="@string/pal"
+            android:textColor="@color/colorLightGreen"
+            android:textSize="50dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

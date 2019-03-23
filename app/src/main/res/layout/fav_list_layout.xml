@@ -5,58 +5,49 @@
 
     <TextView
         android:id="@+id/favCourseName"
-        android:layout_width="175dp"
-        android:maxWidth="125dp"
+        android:layout_width="130dp"
+        android:maxWidth="130dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="54dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginStart="15dp"
         android:text="@string/courseNameLbl"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/favCourseLocation"
-        android:layout_width="125dp"
-        android:maxWidth="125dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/favCourseName"
-        android:text="@string/courseLocationLbl" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/favCoursePar"
-        android:layout_width="140dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="54dp"
+        android:layout_marginBottom="10dp"
         android:layout_below="@id/favCourseName"
-        android:layout_alignStart="@id/favCourseName"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/courseParLbl" />
-
-    <Button
-        android:id="@+id/favRemove"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/favCoursePar"
-        android:background="@null"
-        android:drawableEnd="@drawable/garbage" />
+        android:maxWidth="130dp"
+        android:text="@string/courseParLbl"
+        android:textColor="@color/colorGrey"
+        android:textSize="14sp" />
 
     <RatingBar
         android:id="@+id/favCourseRating"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/favCourseLocation"
-        android:layout_toEndOf="@id/favCoursePar"
-        android:scaleX="0.7"
-        android:scaleY="0.7"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/favCourseName"
+        android:layout_marginTop="5dp"
+        android:theme="@style/myFavouritesRatingBar"/>
+
+    <Button
+        android:id="@+id/favRemove"
+        android:drawableEnd="@drawable/garbage"
+        android:background="@null"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

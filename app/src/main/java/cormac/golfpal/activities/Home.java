@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,8 @@ import cormac.golfpal.utils.FavListViewAdapter;
 import static android.widget.Toast.LENGTH_SHORT;
 import static cormac.golfpal.R.id.navImage;
 import static cormac.golfpal.R.id.navNumberOfCourses;
+import static cormac.golfpal.R.id.progressBar;
+import static cormac.golfpal.R.id.visible;
 
 public class Home extends Base {
     TextView emptyList;
@@ -55,10 +58,10 @@ public class Home extends Base {
     DatabaseReference databaseCourses;
     List<Course> courseList;
     List<Course> favList;
+    List<Course> countList;
     private DrawerLayout drawerLayout;
-    int count;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,91 +75,89 @@ public class Home extends Base {
         drawerLayout = findViewById(R.id.drawer_layout);
         FirebaseApp.initializeApp(this);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        final Uri photoUrl = user.getPhotoUrl();
-        final String userName = user.getDisplayName();
-        count = 0;
         mAuth = FirebaseAuth.getInstance();
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
-                    startActivity(new Intent(Home.this, SignIn.class));
-                }
-            }
-        };
-
-        NavigationView nav_view = findViewById(R.id.nav_view);
-        nav_view.setItemIconTintList(null);
-        Log.i("photourl", "onCreate: " + String.valueOf(photoUrl));
-        Log.i("googleSignIn", "onCreate: user = " + user);
         if(user == null){
             Intent toSignIn = new Intent(Home.this, SignIn.class);
             startActivity(toSignIn);
         }else {
+            Log.i("nulluser", "onCreate: user not null");
+            Log.i("nulluser", "onCreate: " + user);
             databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
+
+            Log.i("user", "onCreate: " + user);
+            final Uri photoUrl = user.getPhotoUrl();
+            final String userName = user.getDisplayName();
+
+            NavigationView nav_view = findViewById(R.id.nav_view);
+            nav_view.setItemIconTintList(null);
+            Log.i("photourl", "onCreate: " + String.valueOf(photoUrl));
+            Log.i("googleSignIn", "onCreate: user = " + user);
+
+            checkUser();
+
+            courseList = new ArrayList<>();
+            favList = new ArrayList<>();
+            countList = new ArrayList<>();
+            //sets background on courses button on create
+            Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
+            courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            //method for handling the buttons
+            buttonHandlers();
+            //setting list view to emptyList text view if it is empty
+            emptyList = findViewById(R.id.emptyList);
+            courseListView = findViewById(R.id.recentlyAddedList);
+            courseListView.setEmptyView(progressBar);
+            courseListView.setLongClickable(true);
+
+            //long click listener for courses which brings user to an update course screen
+            courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Course course = (Course) courseListView.getItemAtPosition(i);
+                    Log.i("updateCourse", "onItemLongClick: Home courseId: " + course.courseId);
+                    Intent toUpdate = new Intent(Home.this, Update.class);
+                    toUpdate.putExtra("courseId", course.courseId);
+                    toUpdate.putExtra("name", course.name);
+                    toUpdate.putExtra("favourite", course.favourite);
+                    toUpdate.putExtra("lat", course.lat);
+                    toUpdate.putExtra("lon", course.lon);
+                    startActivity(toUpdate);
+
+                    return true;
+                }
+            });
+
+            drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+//
+                }
+
+                @Override
+                public void onDrawerOpened(View drawerView) {
+//
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+
+                }
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+                    //use picasso library to cast users google picture to the nav drawer
+                    Picasso.with(getApplicationContext()).load(photoUrl).into((ImageView) findViewById(navImage));
+                    //set Text View to user name
+                    TextView name = findViewById(R.id.navUsername);
+                    name.setText(userName);
+                    TextView numberOfCourses = findViewById(R.id.navNumberOfCourses);
+                    numberOfCourses.setText(String.valueOf(courseList.size()) + " courses");
+                }
+            });
         }
-
-        checkUser();
-
-        courseList = new ArrayList<>();
-        favList = new ArrayList<>();
-        //sets background on courses button on create
-        Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
-        courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        //method for handling the buttons
-        buttonHandlers();
-        //setting list view to emptyList text view if it is empty
-        emptyList = findViewById(R.id.emptyList);
-        courseListView = findViewById(R.id.recentlyAddedList);
-        courseListView.setEmptyView(emptyList);
-        courseListView.setLongClickable(true);
-
-        //long click listener for courses which brings user to an update course screen
-        courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Course course = (Course) courseListView.getItemAtPosition(i);
-                Log.i("updateCourse", "onItemLongClick: Home courseId: " + course.courseId);
-                Intent toUpdate = new Intent(Home.this, Update.class);
-                toUpdate.putExtra("courseId", course.courseId);
-                toUpdate.putExtra("name", course.name);
-                toUpdate.putExtra("favourite", course.favourite);
-                toUpdate.putExtra("lat", course.lat);
-                toUpdate.putExtra("lon", course.lon);
-                startActivity(toUpdate);
-
-                return true;
-            }
-        });
-
-        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                //use picasso library to cast users google picture to the nav drawer
-                Picasso.with(getApplicationContext()).load(photoUrl).into((ImageView) findViewById(navImage));
-                //set Text View to user name
-                TextView name = findViewById(R.id.navUsername);
-                name.setText(userName);
-                TextView numberOfCourses = findViewById(R.id.navNumberOfCourses);
-                numberOfCourses.setText(String.valueOf(count) + " courses");
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
     }
 
     private boolean checkUser() {
@@ -173,21 +174,22 @@ public class Home extends Base {
     @Override
     protected void onStart() {
         super.onStart();
-        count = 0;
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.addAuthStateListener(mAuthListener);
-        if (checkUser() == false) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user == null){
             Intent toSignIn = new Intent(Home.this, SignIn.class);
             startActivity(toSignIn);
-        } else {
+        }else {
+            Log.i("nulluser", "onStart: user is not null" + user);
+            databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
             databaseCourses.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     courseList.clear();
-                    for (DataSnapshot courseSnapShot : dataSnapshot.getChildren()) {
+                    for(DataSnapshot courseSnapShot: dataSnapshot.getChildren())
+                    {
                         Course course = courseSnapShot.getValue(Course.class);
                         courseList.add(course);
-                        count++;
                     }
                     CourseListViewAdapter courseListViewAdapter = new CourseListViewAdapter(Home.this, courseList);
                     courseListView.setAdapter(courseListViewAdapter);
@@ -195,7 +197,7 @@ public class Home extends Base {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }
@@ -289,7 +291,7 @@ public class Home extends Base {
     public void menuLogOut(View view) {
 
         mAuth.signOut();
-
+        startActivity(new Intent(Home.this, SignIn.class));
     }
 
 }
