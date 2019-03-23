@@ -197,11 +197,12 @@ public class Map extends FragmentActivity implements
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("User Current Location");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        markerOptions.title("My Current Location");
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.golf_ball_marker_b_w_32));
 
         currentUserLocationMarker = mMap.addMarker(markerOptions);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        LatLng currentLocation = getCurrentLocation();
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(0));
 
         if(googleApiClient != null)
@@ -244,7 +245,7 @@ public class Map extends FragmentActivity implements
     public void addCourseMarker(String courseName, double lat, double lon)
     {
             Log.i("addingdiffcourses", "addCourseMarker: lat, lon: " + lat + lon);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(courseName).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(courseName).icon(BitmapDescriptorFactory.fromResource(R.drawable.golf_ball_marker_green_32)));
     }
 
     protected  void addCourseMarkers()
@@ -259,7 +260,7 @@ public class Map extends FragmentActivity implements
 
                     if(course.lat != 0 || course.lon != 0)
                     {
-                        mMap.addMarker(new MarkerOptions().position(new LatLng(course.lat, course.lon)).title(course.name).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        mMap.addMarker(new MarkerOptions().position(new LatLng(course.lat, course.lon)).title(course.name).icon(BitmapDescriptorFactory.fromResource(R.drawable.golf_ball_marker_green_32)));
                     }else{
                         Log.i("favourites", "No favourites added");
                     }

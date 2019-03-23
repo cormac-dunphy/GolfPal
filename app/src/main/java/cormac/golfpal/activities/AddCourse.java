@@ -68,12 +68,13 @@ public class AddCourse extends Base {
         String courseName = courseNameET.getText().toString();
         String courseLocation = courseLocationET.getText().toString();
         String courseParText = courseParET.getText().toString();
-        Double coursePar = Double.parseDouble(courseParText);
         float courseRating = courseRatingBar.getRating();
         boolean courseFavourite = false;
 
-        if(!TextUtils.isEmpty(courseName) || !TextUtils.isEmpty(courseLocation) || !TextUtils.isEmpty(String.valueOf(coursePar)))
+        if(!TextUtils.isEmpty(courseName) || !TextUtils.isEmpty(courseLocation) || !TextUtils.isEmpty(String.valueOf(courseParText)))
         {
+            Double coursePar = Double.parseDouble(courseParText);
+
             String id = databaseCourses.push().getKey();
 
             Course course = new Course(id, courseName, courseLocation, coursePar, courseRating, courseFavourite, lat, lon);
@@ -100,14 +101,15 @@ public class AddCourse extends Base {
         String courseName = courseNameET.getText().toString();
         String courseLocation = courseLocationET.getText().toString();
         String courseParText = courseParET.getText().toString();
-        Double coursePar = Double.parseDouble(courseParText);
         float courseRating = courseRatingBar.getRating();
         boolean courseFavourite = false;
         Integer courseLat = 0;
         Integer courseLon = 0;
 
-        if(!TextUtils.isEmpty(courseName) || !TextUtils.isEmpty(courseLocation) || !TextUtils.isEmpty(String.valueOf(coursePar)))
+        if(!TextUtils.isEmpty(courseName) || !TextUtils.isEmpty(courseLocation) || !TextUtils.isEmpty(String.valueOf(courseParText)))
         {
+            Double coursePar = Double.parseDouble(courseParText);
+
             String id = databaseCourses.push().getKey();
 
             Course course = new Course(id, courseName, courseLocation, coursePar, courseRating, courseFavourite, courseLat, courseLon);

@@ -30,7 +30,7 @@
     <string name="courseRatingLbl">Star Rating</string>
     <string name="courseDetailsLbl">Full Course Details</string>
     <string name="informationLbl">Information</string>
-    <string name="emptyMessageLbl">Add some courses!</string>
+    <string name="emptyMessageLbl"></string>
     <string name="favTitle">Favourite Courses</string>
     <string name="removefavourite">Remove</string>
     <string name="updateName">Update Name</string>
@@ -46,6 +46,8 @@
     <string name="title_activity_map">Map</string>
     <string name="checkIn">Check In At Course</string>
     <string name="title_activity_sign_in">Sign in</string>
+    <string name="golf">Golf</string>
+    <string name="pal">Pal</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

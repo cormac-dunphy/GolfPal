@@ -18,8 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import cormac.golfpal.R;
+import cormac.golfpal.activities.Home;
 import cormac.golfpal.models.Course;
 import static android.widget.Toast.LENGTH_SHORT;
 
@@ -45,14 +48,18 @@ public class CourseListViewAdapter extends ArrayAdapter<Course> {
 
         TextView courseName = courseListItem.findViewById(R.id.clCourseName);
 //        TextView courseLocation = courseListItem.findViewById(R.id.clCourseLocation);
-//        TextView coursePar = courseListItem.findViewById(R.id.clCoursePar);
+        TextView coursePar = courseListItem.findViewById(R.id.clCoursePar);
         RatingBar courseRating = courseListItem.findViewById(R.id.clCourseRating);
 
         Course course = courseList.get(position);
 
         courseName.setText(course.getName());
 //        courseLocation.setText(course.getLocation());
-//        coursePar.setText(String.valueOf(course.getPar()));
+
+        DecimalFormat format = new DecimalFormat("0.#");
+        String par = String.valueOf(format.format(course.getPar()));
+
+        coursePar.setText("Par " + par);
         courseRating.setRating((float) course.getRating());
 
         Button deleteButton = courseListItem.findViewById(R.id.clDeleteBtn);

@@ -19,4 +19,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="myFavouritesRatingBar" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/colorGold</item>
+        <item name="colorControlNormal">@color/colorGrey</item>
+    </style>
+
+    <style name="myCoursesRatingBar" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorGrey</item>
+    </style>
+
 </resources>
