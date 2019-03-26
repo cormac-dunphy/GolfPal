@@ -1,6 +1,8 @@
 package cormac.golfpal.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
@@ -47,6 +49,7 @@ import cormac.golfpal.utils.CourseListViewAdapter;
 import cormac.golfpal.utils.FavListViewAdapter;
 
 import static android.widget.Toast.LENGTH_SHORT;
+import static cormac.golfpal.R.id.drawer_layout;
 import static cormac.golfpal.R.id.navImage;
 import static cormac.golfpal.R.id.navNumberOfCourses;
 import static cormac.golfpal.R.id.progressBar;
@@ -74,7 +77,7 @@ public class Home extends Base {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
         drawerLayout = findViewById(R.id.drawer_layout);
         FirebaseApp.initializeApp(this);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -91,7 +94,7 @@ public class Home extends Base {
             final Uri photoUrl = user.getPhotoUrl();
             final String userName = user.getDisplayName();
 
-            NavigationView nav_view = findViewById(R.id.nav_view);
+            final NavigationView nav_view = findViewById(R.id.nav_view);
             nav_view.setItemIconTintList(null);
             Log.i("photourl", "onCreate: " + String.valueOf(photoUrl));
             Log.i("googleSignIn", "onCreate: user = " + user);
@@ -125,6 +128,69 @@ public class Home extends Base {
                     toUpdate.putExtra("lat", course.lat);
                     toUpdate.putExtra("lon", course.lon);
                     startActivity(toUpdate);
+
+                    return true;
+                }
+            });
+
+            nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    int id = item.getItemId();
+
+                    Log.i("navdrawer", "onNavigationItemSelected: " + item.getTitle());
+
+                    if(item.getTitle().toString().equals("Help")){
+
+                        AlertDialog.Builder aBuilder = new AlertDialog.Builder(Home.this);
+                        aBuilder.setMessage("Some help for the app")
+                                .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = aBuilder.create();
+                        alertDialog.setTitle("Help");
+                        alertDialog.show();
+                    }
+
+                    if(item.getTitle().toString().equals("Info")){
+                        AlertDialog.Builder aBuilder = new AlertDialog.Builder(Home.this);
+                        aBuilder.setMessage("Some info about the app")
+                                .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = aBuilder.create();
+                        alertDialog.setTitle("Information");
+                        alertDialog.show();
+                    }
+
+                    if(item.getTitle().toString().equals("Map")){
+                        startActivity(new Intent(Home.this, Map.class));
+                    }
+
+                    if(item.getTitle().toString().equals("Favourites")){
+                        drawerLayout.closeDrawers();
+
+                        getFavourites();
+                    }
+
+                    if(item.getTitle().toString().equals("Courses")){
+                        drawerLayout.closeDrawers();
+
+                        final Button coursesButton = (Button) findViewById(R.id.homeCoursesButton);
+                        final Button favouritesButton = (Button) findViewById(R.id.homeFavouriteCoursesButton);
+
+                        coursesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                        onStart();
+                    }
 
                     return true;
                 }
@@ -204,6 +270,12 @@ public class Home extends Base {
     }
 
     protected  void getFavourites() {
+        final Button coursesButton = (Button) findViewById(R.id.homeCoursesButton);
+        final Button favouritesButton = (Button) findViewById(R.id.homeFavouriteCoursesButton);
+
+        favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
         databaseCourses.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -289,7 +361,6 @@ public class Home extends Base {
     }
 
     public void menuLogOut(View view) {
-
         mAuth.signOut();
         startActivity(new Intent(Home.this, SignIn.class));
     }
