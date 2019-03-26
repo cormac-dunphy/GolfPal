@@ -2,6 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/navHelp"
+        android:icon="@drawable/ic_help_outline_black_24dp"
+        android:title="@string/help" />
 
+    <item
+        android:id="@+id/navInfo"
+        android:icon="@drawable/ic_info_outline_black_24dp"
+        android:title="@string/info" />
+
+    <item
+        android:id="@+id/navMap"
+        android:icon="@drawable/ic_location_on_black_24dp"
+        android:title="@string/capMap" />
+
+    <item
+        android:id="@+id/navFav"
+        android:icon="@drawable/ic_star_border_black_24dp"
+        android:title="@string/capFavourites" />
+
+    <item
+        android:id="@+id/navCourses"
+        android:icon="@drawable/ic_golf_course_black_24dp"
+        android:title="@string/capCourse" />
 
 </menu>

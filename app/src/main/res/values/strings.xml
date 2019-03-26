@@ -48,6 +48,9 @@
     <string name="title_activity_sign_in">Sign in</string>
     <string name="golf">Golf</string>
     <string name="pal">Pal</string>
+    <string name="help">Help</string>
+    <string name="info">Info</string>
+    <string name="capMap">Map</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -65,4 +68,6 @@
     <string name="logout">Log Out</string>
     <string name="userName">username</string>
     <string name="userEmail">user email</string>
+    <string name="capFavourites">Favourites</string>
+    <string name="capCourse">Courses</string>
 </resources>
