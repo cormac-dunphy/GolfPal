@@ -11,17 +11,14 @@ import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.DecimalFormat;
 import java.util.List;
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
-
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class FavListViewAdapter extends ArrayAdapter<Course> {
@@ -44,16 +41,13 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
         View favListItem = inflater.inflate(R.layout.fav_list_layout, null, true);
 
         TextView courseName = favListItem.findViewById(R.id.favCourseName);
-        //TextView courseLocation = favListItem.findViewById(R.id.favCourseLocation);
         TextView coursePar = favListItem.findViewById(R.id.favCoursePar);
         RatingBar courseRating = favListItem.findViewById(R.id.favCourseRating);
 
         Course course = favList.get(position);
 
         courseName.setText(course.getName());
-        //courseLocation.setText(course.getLocation());
-        //coursePar.setText(String.valueOf(course.getPar()));
-
+        //removing the .0 from the end of the par value
         DecimalFormat format = new DecimalFormat("0.#");
         String par = String.valueOf(format.format(course.getPar()));
 
@@ -68,8 +62,10 @@ public class FavListViewAdapter extends ArrayAdapter<Course> {
             public void onClick(View view) {
                 Course course = getItem(position);
                 user = FirebaseAuth.getInstance().getCurrentUser();
+                //current course with favourite value set to false
                 Course unmarkAsFavourite = new Course(course.courseId, course.getName(), course.getLocation(), course.getPar(), course.getRating(), false, course.getLat(), course.getLon());
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses").child(course.courseId);
+                //sets database reference to course with favourite value set to false
                 databaseReference.setValue(unmarkAsFavourite);
                 Toast.makeText(getContext(), "Course Removed from Favourites", LENGTH_SHORT).show();
             }

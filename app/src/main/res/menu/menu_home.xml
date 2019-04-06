@@ -3,13 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cormac.golfpal.activities.Home">
 
-    <!--<item-->
-        <!--android:id="@+id/menuLogOut"-->
-        <!--android:icon="@drawable/exit"-->
-        <!--android:onClick="menuLogOut"-->
-        <!--android:title="@string/logout"-->
-        <!--app:showAsAction="always"/>-->
-
     <item
         android:id="@+id/menuMap"
         android:icon="@drawable/location_color"
