@@ -1,21 +1,17 @@
 package cormac.golfpal.activities;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.NavigationMenuPresenter;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,23 +31,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 import cormac.golfpal.utils.CourseListViewAdapter;
-//import cormac.golfpal.utils.DatabaseHelper;
 import cormac.golfpal.utils.FavListViewAdapter;
-
-import static android.widget.Toast.LENGTH_SHORT;
-import static cormac.golfpal.R.id.drawer_layout;
 import static cormac.golfpal.R.id.navImage;
-import static cormac.golfpal.R.id.navNumberOfCourses;
-import static cormac.golfpal.R.id.progressBar;
-import static cormac.golfpal.R.id.visible;
 
 public class Home extends Base {
     TextView emptyList;
@@ -61,7 +45,6 @@ public class Home extends Base {
     DatabaseReference databaseCourses;
     List<Course> courseList;
     List<Course> favList;
-    List<Course> countList;
     private DrawerLayout drawerLayout;
     private FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -70,40 +53,39 @@ public class Home extends Base {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //display toolbar with home button
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        //nav drawer
         drawerLayout = findViewById(R.id.drawer_layout);
+        //allows app to use firebase
         FirebaseApp.initializeApp(this);
+        //current logged in user
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //gets the firebase db
         mAuth = FirebaseAuth.getInstance();
+        //spinner appears while course list is loading
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-
+        //if no user is signed in send them to sign in page
         if(user == null){
             Intent toSignIn = new Intent(Home.this, SignIn.class);
             startActivity(toSignIn);
         }else {
-            Log.i("nulluser", "onCreate: user not null");
-            Log.i("nulluser", "onCreate: " + user);
+            //reference for current users courses
             databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
-
-            Log.i("user", "onCreate: " + user);
+            //gets current users display picture and user name
             final Uri photoUrl = user.getPhotoUrl();
             final String userName = user.getDisplayName();
-
+            //nav drawer view
             final NavigationView nav_view = findViewById(R.id.nav_view);
             nav_view.setItemIconTintList(null);
-            Log.i("photourl", "onCreate: " + String.valueOf(photoUrl));
-            Log.i("googleSignIn", "onCreate: user = " + user);
-
-            checkUser();
 
             courseList = new ArrayList<>();
             favList = new ArrayList<>();
-            countList = new ArrayList<>();
             //sets background on courses button on create
             Button courseButton = (Button) findViewById(R.id.homeCoursesButton);
             courseButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
@@ -116,6 +98,7 @@ public class Home extends Base {
             courseListView.setLongClickable(true);
 
             //long click listener for courses which brings user to an update course screen
+            //sends all course info to update in an intent
             courseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -136,15 +119,15 @@ public class Home extends Base {
             nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    int id = item.getItemId();
-
-                    Log.i("navdrawer", "onNavigationItemSelected: " + item.getTitle());
-
+            //handles all the options on the nav drawer
                     if(item.getTitle().toString().equals("Help")){
 
                         AlertDialog.Builder aBuilder = new AlertDialog.Builder(Home.this);
-                        aBuilder.setMessage("Some help for the app")
+                        aBuilder.setMessage("-To add a course press the button at the bottom of the home screen\n" +
+                                            "-To delete a course click the trash can\n" +
+                                            "-To update a course long click on a course\n" +
+                                            "-To navigate open the nav drawer by clicking the hamburger menu on the top left of the home screen\n" +
+                                            "-To add course with location marker go to check in at course on the Map page")
                                 .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -158,7 +141,9 @@ public class Home extends Base {
 
                     if(item.getTitle().toString().equals("Info")){
                         AlertDialog.Builder aBuilder = new AlertDialog.Builder(Home.this);
-                        aBuilder.setMessage("Some info about the app")
+                        aBuilder.setMessage("-This app is to help users keep track of courses they've played and their favourite courses\n" +
+                                            "-It also allows users to mark courses they've played on a Map\n" +
+                                            "-Created by Cormac Dunphy 2019")
                                 .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -211,7 +196,7 @@ public class Home extends Base {
                 public void onDrawerClosed(View drawerView) {
 
                 }
-
+                //display users display picture and username when drawer state changes
                 @Override
                 public void onDrawerStateChanged(int newState) {
                     //use picasso library to cast users google picture to the nav drawer
@@ -226,29 +211,20 @@ public class Home extends Base {
         }
     }
 
-    private boolean checkUser() {
-        if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            Log.i("googleSignIn", "checkUser: user is null");
-            return false;
-        }else{
-            Log.i("googleSignIn", "checkUser: user = " + FirebaseAuth.getInstance().getCurrentUser());
-            return true;
-        }
-    }
-
-
     @Override
     protected void onStart() {
         super.onStart();
+        //get current firebase user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+        //if no user is signed in send them to sign in page
         if(user == null){
             Intent toSignIn = new Intent(Home.this, SignIn.class);
             startActivity(toSignIn);
         }else {
-            Log.i("nulluser", "onStart: user is not null" + user);
+            //reference to current users courses
             databaseCourses = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
             databaseCourses.addValueEventListener(new ValueEventListener() {
+                //goes through all courses for user and displays them on course list view
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     courseList.clear();
@@ -263,20 +239,21 @@ public class Home extends Base {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                    Toast.makeText(Home.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
-
+    //get all courses that are favourited
     protected  void getFavourites() {
         final Button coursesButton = (Button) findViewById(R.id.homeCoursesButton);
         final Button favouritesButton = (Button) findViewById(R.id.homeFavouriteCoursesButton);
-
+        //changes background of both buttons to indicate that you are looking at the favourites list
         favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
         coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         databaseCourses.addValueEventListener(new ValueEventListener() {
+            //goes through all courses for that user and adds any which are favourited to favlist
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 favList.clear();
@@ -303,7 +280,7 @@ public class Home extends Base {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu this adds items to the action bar if it is present.
+        // Inflate the home menu
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
@@ -317,7 +294,7 @@ public class Home extends Base {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        //if nav drawer button is pressed open the nav drawer
         switch(item.getItemId()){
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -332,7 +309,7 @@ public class Home extends Base {
         //startActivity(new Intent(this, SignIn.class));
         startActivity(new Intent(this,AddCourse.class));
     }
-
+    //handlers for courses and favourite buttons
     public void buttonHandlers(){
         final Button coursesButton = (Button) findViewById(R.id.homeCoursesButton);
         final Button favouritesButton = (Button) findViewById(R.id.homeFavouriteCoursesButton);
@@ -340,10 +317,10 @@ public class Home extends Base {
         coursesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //when courses button is clicked change background of both buttons to indicate user is looking at all courses
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-                //loadDataCourseList();
+                //onStart puts all courses on the list view
                 onStart();
             }
         });
@@ -351,15 +328,16 @@ public class Home extends Base {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //when favourites button is clicked change background of both buttons to indicate user is looking at favourites
                 favouritesButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 coursesButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
+                //get favourites method displays favourites
                 getFavourites();
             }
         });
 
     }
-
+    //logs user out when they click logout button
     public void menuLogOut(View view) {
         mAuth.signOut();
         startActivity(new Intent(Home.this, SignIn.class));

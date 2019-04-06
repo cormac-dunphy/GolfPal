@@ -50,9 +50,12 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        //reference to users in database
         databaseUsers = FirebaseDatabase.getInstance().getReference("users");
         mAuth = FirebaseAuth.getInstance();
         googleButton = findViewById(R.id.googleButton);
+        //if user signs in and they don't already exist in the database it will add them in to the database
+        //if the user already exists it will go to the home page
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -102,7 +105,7 @@ public class SignIn extends AppCompatActivity {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
+        //click listener for google sign in button
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +117,7 @@ public class SignIn extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        //listener for users sign in status(is there a user signed in or not)
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -160,8 +163,6 @@ public class SignIn extends AppCompatActivity {
                             Log.w("googleSignIn", "signInWithCredential:failure", task.getException());
                             Toast.makeText(SignIn.this, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }

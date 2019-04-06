@@ -1,8 +1,6 @@
 package cormac.golfpal.activities;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -13,15 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.gms.location.LocationListener;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
@@ -41,10 +34,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
-import cormac.golfpal.utils.FavListViewAdapter;
 
 public class Map extends FragmentActivity implements
         OnMapReadyCallback,
@@ -58,9 +49,6 @@ public class Map extends FragmentActivity implements
     private  Location lastLocation;
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
-    String courseName;
-    Double lat;
-    Double lon;
     DatabaseReference coursesDatabase;
     FirebaseUser user;
 
@@ -71,6 +59,7 @@ public class Map extends FragmentActivity implements
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
+            //checks permissions in android manifest
             checkUserLocationPermission();
         }
 
@@ -78,7 +67,9 @@ public class Map extends FragmentActivity implements
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //current firebase user
         user = FirebaseAuth.getInstance().getCurrentUser();
+        //reference for current users courses
         coursesDatabase = FirebaseDatabase.getInstance().getReference("users").child(user.getUid()).child("courses");
     }
 
@@ -101,15 +92,6 @@ public class Map extends FragmentActivity implements
             buildGoogleApiClient();
 
             mMap.setMyLocationEnabled(true);
-        }
-
-        Bundle extras = getIntent().getExtras();
-        if(extras != null)
-        {
-            courseName = extras.getString("courseName");
-            lat = extras.getDouble("lat");
-            lon = extras.getDouble("lon");
-            addCourseMarker(courseName, lat, lon);
         }
 
         addCourseMarkers();
@@ -171,7 +153,7 @@ public class Map extends FragmentActivity implements
         Intent toHome = new Intent(Map.this, Home.class);
         startActivity(toHome);
     }
-
+    //gets lat and lon value from users current location and goes to add course
     public void toAddCourse(View view) {
         LatLng latLng = getCurrentLocation();
 
@@ -183,7 +165,7 @@ public class Map extends FragmentActivity implements
         toAddCourse.putExtra("lon", lon);
         startActivity(toAddCourse);
     }
-
+    //keeping track of users current location
     @Override
     public void onLocationChanged(Location location) {
         lastLocation = location;
@@ -234,7 +216,7 @@ public class Map extends FragmentActivity implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
+    //gets latLng of users current location
     public LatLng getCurrentLocation()
     {
         LatLng latlng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
@@ -242,12 +224,7 @@ public class Map extends FragmentActivity implements
         return latlng;
     }
 
-    public void addCourseMarker(String courseName, double lat, double lon)
-    {
-            Log.i("addingdiffcourses", "addCourseMarker: lat, lon: " + lat + lon);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lon)).title(courseName).icon(BitmapDescriptorFactory.fromResource(R.drawable.golf_ball_marker_green_32)));
-    }
-
+    //goes through all courses and puts markers on the map of any courses with lat lon values along with that courses title
     protected  void addCourseMarkers()
     {
         coursesDatabase.addValueEventListener(new ValueEventListener() {
