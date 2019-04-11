@@ -13,11 +13,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DecimalFormat;
+
 import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 
 public class Update extends AppCompatActivity {
     String courseName;
+    String courseLocation;
+    Double coursePar;
     Boolean favourite;
     Double lat;
     Double lon;
@@ -39,14 +44,23 @@ public class Update extends AppCompatActivity {
         if(extras!=null){
             courseId = extras.getString("courseId");
             courseName = extras.getString("name");
+            courseLocation = extras.getString("location");
+            coursePar = extras.getDouble("par");
             favourite = extras.getBoolean("favourite");
             lat = extras.getDouble("lat");
             lon = extras.getDouble("lon");
         }
+
+        DecimalFormat format = new DecimalFormat("0.#");
+        String par = String.valueOf(format.format(coursePar));
+
         Log.i("updateCourse", "onCreate: courseId = " + courseId);
         newNameET = findViewById(R.id.updateNameET);
+        newNameET.setHint(courseName);
         newLocationET = findViewById(R.id.updateLocationET);
+        newLocationET.setHint(courseLocation);
         newParET = findViewById(R.id.updateParET);
+        newParET.setHint(String.valueOf("Par " + par));
         newRatingRB = findViewById(R.id.updateRatingBar);
         updateCourseButton = findViewById(R.id.updateCourseDoneButton);
         //current firebase user
