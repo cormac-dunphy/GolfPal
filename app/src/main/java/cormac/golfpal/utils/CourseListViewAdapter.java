@@ -24,7 +24,6 @@ import cormac.golfpal.models.Course;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class CourseListViewAdapter extends ArrayAdapter<Course> {
-    //layout inflater
     private List<Course> courseList;
     private Activity context;
     FirebaseUser user;

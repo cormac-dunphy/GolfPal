@@ -127,7 +127,7 @@ public class Home extends Base {
                                             "-To delete a course click the trash can\n" +
                                             "-To update a course long click on a course\n" +
                                             "-To navigate open the nav drawer by clicking the hamburger menu on the top left of the home screen\n" +
-                                            "-To add course with location marker go to check in at course on the Map page")
+                                            "-To add course with location marker go to check in at course on the Map page or check the checkbox available on the add course activity.")
                                 .setNegativeButton("Okay", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {

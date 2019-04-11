@@ -51,6 +51,7 @@
     <string name="help">Help</string>
     <string name="info">Info</string>
     <string name="capMap">Map</string>
+    <string name="locationMarker">Add Marker To Map</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
