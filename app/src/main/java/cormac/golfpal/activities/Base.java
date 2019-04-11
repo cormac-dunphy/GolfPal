@@ -18,7 +18,7 @@ public class Base extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
-    //when home button pressed go to home page
+    //when map button pressed go to map page
     public void menuMap(MenuItem m) {
         startActivity(new Intent(this, Map.class));
     }

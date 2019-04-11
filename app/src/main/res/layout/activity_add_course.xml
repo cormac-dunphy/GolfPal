@@ -76,4 +76,22 @@
         android:text="@string/done"
         android:textColor="@color/colorFontWhite" />
 
+    <CheckBox
+        android:id="@+id/addLocationCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addNameET"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@id/addLocationET" />
+
+    <ImageView
+        android:id="@+id/addLocationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/addLocationCB"
+        android:layout_below="@id/addNameET"
+        android:layout_marginTop="13dp"
+        android:contentDescription="locationimage"
+        android:src="@drawable/golf_ball_marker_green_32" />
+
 </RelativeLayout>

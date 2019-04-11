@@ -17,7 +17,6 @@ import cormac.golfpal.R;
 import cormac.golfpal.models.Course;
 
 public class Update extends AppCompatActivity {
-    //DatabaseHelper myDb;
     String courseName;
     Boolean favourite;
     Double lat;
