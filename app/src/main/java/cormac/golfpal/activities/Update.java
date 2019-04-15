@@ -82,7 +82,7 @@ public class Update extends AppCompatActivity {
                 } else if (newLocationET.getText().toString().trim().length() <= 0) {
                     Toast.makeText(Update.this, "Please Enter Course Location", Toast.LENGTH_SHORT).show();
                 } else if (newParET.getText().toString().trim().length() <= 0) {
-                    Toast.makeText(Update.this, "Please Enter Course Price", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Update.this, "Please Enter Course Par", Toast.LENGTH_SHORT).show();
                 } else {
                     //updates course with that id
                     update(courseId);
