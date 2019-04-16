@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context="cormac.golfpal.activities.AddCourse">
 
-    <ImageView
-        android:id="@+id/addImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentTop="true"
-        android:contentDescription="swingimage"
-        android:src="@drawable/swing" />
-
     <EditText
         android:id="@+id/addNameET"
         android:layout_width="wrap_content"
@@ -23,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
@@ -93,5 +83,82 @@
         android:layout_marginTop="13dp"
         android:contentDescription="locationimage"
         android:src="@drawable/golf_ball_marker_green_32" />
+
+    <TextView
+        android:id="@+id/addSelectCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/selectACourse"
+        android:textColor="@color/colorGrey"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/addSelectLineLeft"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="14dp"
+        android:layout_above="@id/addCourseListView"
+        android:layout_toStartOf="@id/addSelectCourse"
+        android:background="@color/colorGrey" />
+
+    <View
+        android:id="@+id/addSelectLineRight"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="14dp"
+        android:layout_above="@id/addCourseListView"
+        android:layout_toEndOf="@id/addSelectCourse"
+        android:background="@color/colorGrey" />
+
+    <!--<View-->
+        <!--android:id="@+id/addLineBelowSelect"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:layout_below="@id/addSelectCourse"-->
+        <!--android:background="@color/colorGrey" />-->
+
+    <TextView
+        android:id="@+id/addOr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/or"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/addNameET"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/colorGrey"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/addLineLeft"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/addNameET"
+        android:layout_marginBottom="9sp"
+        android:layout_toStartOf="@id/addOr"
+        android:background="@color/colorGrey" />
+
+    <View
+        android:id="@+id/addLineRight"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/addNameET"
+        android:layout_marginBottom="9sp"
+        android:layout_toEndOf="@id/addOr"
+        android:background="@color/colorGrey" />
+
+    <ListView
+        android:id="@+id/addCourseListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/addOr"
+        android:layout_below="@id/addSelectCourse"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
 
 </RelativeLayout>
